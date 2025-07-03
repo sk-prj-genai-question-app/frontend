@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Frontend CI/CD PipeLine - Build and Push Docker Image
 
 on:
   push:
