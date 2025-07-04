@@ -1,9 +1,9 @@
 ---
-name: Issue template
-about: 커스텀 이슈 생성 템플릿입니다.
+name: Frontend issue template
+about: 프론트엔드 커스텀 이슈 생성 템플릿입니다.
 title: "[TYPE] 간결하고 명확한 이슈 제목"
 labels: ''
-assignees: oyushik
+assignees: ''
 
 ---
 
@@ -12,5 +12,5 @@ TYPE은 [BUG, FEAT, DOCS, FIX, REFACTOR] 중 적절한 걸로 하나 골라서 �
 - [ ] 구현 내용 1
 - [ ] 구현 내용 2
 
-특별한 경우가 아니라면 Assignees는 'assign yourself'(본인)를 default로 해 주세요.
+특별한 경우가 아니라면 Assignees는 'assign yourself'(본인)를 default로 선택해 주세요.
 적절한 Lables 추가해 주세요.
