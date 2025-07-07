@@ -111,7 +111,7 @@ const WrongNotePage = () => {
   }));
 
   return (
-    <AppLayout>
+    <>
       <div className="wrongnote-wrapper">
         {/* 📌 필터 영역 */}
         <div className="filter-bar">
@@ -188,7 +188,7 @@ const WrongNotePage = () => {
           <button>전체 다시 풀기</button>
         </div>
       </div>
-    </AppLayout>
+    </>
   );
 };
 

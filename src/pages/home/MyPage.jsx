@@ -14,7 +14,7 @@ const MyPage = () => {
   };
 
   return (
-    <AppLayout>
+    <>
       <div className="main-grid">
         <div className="left">
           <ProfileCard user={user} />
@@ -31,7 +31,7 @@ const MyPage = () => {
         <ProgressCard level="N4" subject="언어지식(문법)・독해" value={60} />
         <ProgressCard level="N5" subject="청해" value={73} />
       </div>
-    </AppLayout>
+    </>
   );
 };
 

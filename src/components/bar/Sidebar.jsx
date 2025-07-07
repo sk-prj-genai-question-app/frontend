@@ -5,10 +5,10 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <h2>JLPT AI</h2>
-      <Link to="/">
+      <Link to="/mypage">
         <button>홈</button>
       </Link>
-      <Link to="/review">
+      <Link to="/wrong-note">
         <button>오답노트</button>
       </Link>
       <Link to="/n1">
