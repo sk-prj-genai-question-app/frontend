@@ -1,8 +1,7 @@
 import React from "react";
-import ProfileCard from "../components/ProfileCard";
-import ExamInfoCard from "../components/ExamInfoCard";
-import ProgressCard from "../components/ProgressCard";
-import AppLayout from "../components/AppLayout";
+import ProfileCard from "../../components/home/ProfileCard";
+import ExamInfoCard from "../../components/wrongnote/ExamInfoCard";
+import ProgressCard from "../../components/home/ProgressCard";
 import "./MyPage.css";
 
 const MyPage = () => {
@@ -14,7 +13,7 @@ const MyPage = () => {
   };
 
   return (
-    <AppLayout>
+    <>
       <div className="main-grid">
         <div className="left">
           <ProfileCard user={user} />
@@ -31,7 +30,7 @@ const MyPage = () => {
         <ProgressCard level="N4" subject="언어지식(문법)・독해" value={60} />
         <ProgressCard level="N5" subject="청해" value={73} />
       </div>
-    </AppLayout>
+    </>
   );
 };
 
