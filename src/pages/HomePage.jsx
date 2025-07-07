@@ -1,10 +1,10 @@
 import React from 'react';
-import Dashboard from '../components/Dashboard';  // ✅ 대시보드 불러오기
 
 const HomePage = () => {
   return (
     <div>
-      <Dashboard />  {/* ✅ 대시보드 삽입 */}
+      <h1>홈(내 정보) 페이지</h1>
+      <p>여기에 내용을 추가하세요.</p>
     </div>
   );
 };
