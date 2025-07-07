@@ -11,14 +11,8 @@ const Sidebar = () => {
       <Link to="/wrong-note">
         <button>오답노트</button>
       </Link>
-      <Link to="/n1">
-        <button>N1</button>
-      </Link>
-      <Link to="/n2">
-        <button>N2</button>
-      </Link>
-      <Link to="/n3">
-        <button>N3</button>
+      <Link to="/generate-problem">
+        <button>문제 풀기</button>
       </Link>
       <Link to="/custom">
         <button>사용자 맞춤 문제</button>
