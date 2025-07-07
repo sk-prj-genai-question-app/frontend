@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import '../../pages/login/LoginRegisterPage.css';
+import { login } from '../../api/authApi';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('로그인 요청:', { email, password });
-    // TODO: API 요청
+    try {
+      const data = await login(email, password);
+      console.log('로그인 성공:', data);
+      localStorage.setItem('accessToken', data.accessToken);  // ✅ accessToken 저장
+      navigate('/');  // 홈으로 이동
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      alert('로그인 실패! 아이디/비밀번호를 확인하세요.');
+    }
   };
 
   return (
