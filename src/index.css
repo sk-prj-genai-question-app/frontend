@@ -1,11 +1,15 @@
+/* 기본 설정: dev/1.0.1에서 가져옴 */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* feat/3-sidebar-main-page의 배경색을 유지 */
+  background-color: #f9fafb; /* 연한 배경 */ 
+
+  /* feat/3-sidebar-main-page의 글자색으로 변경하거나, dev의 기본으로 둘 수 있음. 일단 dev 기본 유지 */
+  color: rgba(255, 255, 255, 0.87); 
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,6 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 링크 스타일: dev/1.0.1에서 가져옴 */
 a {
   font-weight: 500;
   color: #646cff;
@@ -22,20 +27,21 @@ a:hover {
   color: #535bf2;
 }
 
+/* body 스타일: feat/3-sidebar-main-page의 기본 스타일 유지 */
 body {
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: Arial, sans-serif; /* feat/3-sidebar-main-page 폰트 유지 */
+  background-color: #f9fafb; /* feat/3-sidebar-main-page 배경색 유지 */
+  /* dev/1.0.1의 flex, place-items 등은 container에서 처리되므로 제거 */
 }
 
+/* h1 스타일: dev/1.0.1에서 가져옴 */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
+/* 일반 버튼 스타일: dev/1.0.1에서 가져옴 (사이드바 버튼과 구분) */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -55,6 +61,107 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* 전체 레이아웃: 사이드바 + 메인 (feat/3-sidebar-main-page) */
+.container {
+  display: flex;
+}
+
+/* 사이드바 스타일 (feat/3-sidebar-main-page) */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #1e3a8a; /* 짙은 파란색 */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sidebar button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar button:hover {
+  background-color: #3749ab; /* hover 시 더 진한 파란색 */
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 메인 컨텐츠 영역 스타일 (feat/3-sidebar-main-page) */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* 프로필 섹션 (feat/3-sidebar-main-page) */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+/* 학습 가이드 섹션 (feat/3-sidebar-main-page) */
+.guide {
+  background-color: #f0f4f8;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.guide h3 {
+  margin-top: 0;
+}
+
+.guide ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.guide li {
+  margin-bottom: 8px;
+}
+
+.stats {
+  margin-top: 20px;
+}
+
+.stat-grid {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.circular-stat {
+  width: 100px;
+  text-align: center;
+}
+
+/* 미디어 쿼리 (dev/1.0.1에서 가져옴) */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

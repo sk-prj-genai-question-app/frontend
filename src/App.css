@@ -1,8 +1,9 @@
 #root {
-  max-width: 1280px;
+  width: 100%; /* dev/1.0.1의 변경사항 */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  overflow-x: hidden; /* dev/1.0.1의 변경사항 */
 }
 
 .logo {
