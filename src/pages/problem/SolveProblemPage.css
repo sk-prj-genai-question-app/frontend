@@ -1,0 +1,160 @@
+.solve-problem-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+.solve-problem-page h2 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.problem-container {
+  width: 100%;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.problem-level-type {
+  font-size: 1.1em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.problem-title-parent {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.problem-title-child {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.problem-content {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
+  word-wrap: break-word; /* Break long words */
+  max-height: 300px; /* 독해 지문 최대 높이 설정 (필요에 따라 조절) */
+  overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤바 생성 */
+}
+
+.problem-content pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: 1em;
+  white-space: pre-wrap; /* pre 태그 내부 텍스트 줄 바꿈 */
+  word-break: break-word; /* 긴 단어 강제 줄 바꿈 */
+}
+
+.choices-container {
+  margin-bottom: 20px;
+}
+
+.choice-item {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+}
+
+.choice-item:hover {
+  background-color: #f0f0f0;
+  border-color: #bbb;
+}
+
+.choice-item.selected {
+  background-color: #e0f7fa;
+  border-color: #00bcd4;
+}
+
+.choice-item.correct {
+  background-color: #e8f5e9;
+  border-color: #4caf50;
+  font-weight: bold;
+}
+
+.choice-item.incorrect {
+  background-color: #ffebee;
+  border-color: #f44336;
+  font-weight: bold;
+}
+
+.choice-number {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.submit-button {
+  padding: 12px 25px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.explanation-container {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  width: 100%;
+}
+
+.explanation-container h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.explanation-container p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.next-problem-button {
+  padding: 12px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.next-problem-button:hover {
+  background-color: #218838;
+}
