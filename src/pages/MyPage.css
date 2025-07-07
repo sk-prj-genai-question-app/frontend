@@ -14,7 +14,7 @@
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 32px;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin-left: auto;
   margin-right: auto;
 }
@@ -34,6 +34,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 32px; 
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto 40px auto;
+}
+
+.main-grid, .progress-grid {
+  max-width: 100%; /* ✅ 부모(main-content) 너비에 맞추기 */
+  margin: 0; /* ✅ 중앙 정렬 제거 */
 }
