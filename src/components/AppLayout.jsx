@@ -8,7 +8,7 @@ const AppLayout = ({ children }) => {
     <div className="layout">
       {/* <Sidebar /> */}
       <div className="main-content">
-        <Topbar />
+        {/* <Topbar /> */}
         <div className="page-content">{children}</div>
       </div>
     </div>

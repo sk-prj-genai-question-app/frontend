@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TopBar.css";
 
 const TopBar = ({ username }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();  // ✅ 추가
 
   const toggleDropdown = () => setShowMenu((prev) => !prev);
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+      // 여기서 로그아웃 처리 (예: 토큰 삭제)
+      // localStorage.removeItem("token"); 등 추가 가능
+      navigate("/login");  // ✅ 로그인 페이지로 이동
+  };
 
   const handleDarkModeToggle = () => {};
 

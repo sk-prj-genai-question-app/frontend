@@ -8,7 +8,7 @@ const Sidebar = () => {
       <Link to="/">
         <button>홈</button>
       </Link>
-      <Link to="/review">
+      <Link to="/wrong-note">
         <button>오답노트</button>
       </Link>
       <Link to="/n1">
