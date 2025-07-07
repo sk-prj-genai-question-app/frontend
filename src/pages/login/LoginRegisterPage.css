@@ -1,0 +1,108 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f1f5f9; /* light gray-blue */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-box h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #1f2937; /* gray-800 */
+}
+
+.form-box form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cbd5e1; /* gray-300 */
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-box form input:focus {
+  border-color: #3b82f6; /* blue-500 */
+  outline: none;
+}
+
+.form-box form button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-box form button:hover {
+  background-color: #2563eb; /* blue-600 */
+}
+
+.toggle-text {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+.toggle-text button {
+  margin-left: 0.5rem;
+  color: #3b82f6;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.toggle-text button:hover {
+  text-decoration: underline;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.form-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-button:hover {
+  background-color: #2563eb;
+}
+

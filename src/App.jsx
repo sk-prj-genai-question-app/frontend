@@ -12,6 +12,7 @@ import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';
 import WrongNotePage from './pages/WrongNotePage';
 import MyPage from './pages/MyPage';
+import LoginRegisterPage from './pages/login/LoginRegisterPage'; // feat/6-login-register-question에서 추가
 
 import './index.css';
 
@@ -32,6 +33,8 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/wrong-note" element={<WrongNotePage />} />
             <Route path="/mypage" element={<MyPage />} />
+            {/* 로그인/회원가입 페이지 라우트 추가. 필요에 따라 경로를 조정하세요. */}
+            <Route path="/login" element={<LoginRegisterPage />} />
           </Routes>
         </div>
       </div>
