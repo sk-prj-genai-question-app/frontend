@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import "./ProgressCard.css";
 
-const ProgressCard = ({ title, value }) => {
+const ProgressCard = ({ level, subject, value }) => {
   const data = [
     {
       name: "진행률",
@@ -17,7 +17,10 @@ const ProgressCard = ({ title, value }) => {
 
   return (
     <div className="progress-card">
-      <h4>{title}</h4>
+      <div className="card-title">
+        <div className="level">{level}</div>
+        <div className="subject">{subject}</div>
+      </div>
 
       <div className="chart-container">
         <RadialBarChart
@@ -45,7 +48,6 @@ const ProgressCard = ({ title, value }) => {
           />
         </RadialBarChart>
 
-        {/* 👇 원 안에 퍼센트 숫자 넣기 */}
         <div className="center-label">
           {value}%
         </div>
