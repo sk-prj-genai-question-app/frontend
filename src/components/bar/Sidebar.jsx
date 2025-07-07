@@ -5,7 +5,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <h2>JLPT AI</h2>
-      <Link to="/mypage">
+      <Link to="/">
         <button>홈</button>
       </Link>
       <Link to="/wrong-note">

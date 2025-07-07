@@ -33,6 +33,7 @@ body {
   font-family: Arial, sans-serif; /* feat/3-sidebar-main-page 폰트 유지 */
   background-color: #f9fafb; /* feat/3-sidebar-main-page 배경색 유지 */
   /* dev/1.0.1의 flex, place-items 등은 container에서 처리되므로 제거 */
+  overflow-x: hidden;
 }
 
 /* h1 스타일: dev/1.0.1에서 가져옴 */
@@ -110,6 +111,8 @@ button:focus-visible {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .topbar {

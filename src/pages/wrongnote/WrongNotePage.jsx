@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AppLayout from "../components/AppLayout";
 import Select from "react-select";
 import "./WrongNotePage.css";
 

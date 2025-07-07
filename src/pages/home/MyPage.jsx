@@ -1,8 +1,7 @@
 import React from "react";
-import ProfileCard from "../components/ProfileCard";
-import ExamInfoCard from "../components/ExamInfoCard";
-import ProgressCard from "../components/ProgressCard";
-import AppLayout from "../components/AppLayout";
+import ProfileCard from "../../components/home/ProfileCard";
+import ExamInfoCard from "../../components/wrongnote/ExamInfoCard";
+import ProgressCard from "../../components/home/ProgressCard";
 import "./MyPage.css";
 
 const MyPage = () => {

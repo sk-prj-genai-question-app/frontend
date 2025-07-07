@@ -1,9 +1,14 @@
+// App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import TopBar from "./components/TopBar";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import Sidebar from "./components/bar/Sidebar";
+import TopBar from "./components/bar/TopBar";
 
-import HomePage from "./pages/HomePage";
 import ReviewPage from "./pages/ReviewPage";
 import N1Page from "./pages/N1Page";
 import N2Page from "./pages/N2Page";
@@ -11,9 +16,9 @@ import N3Page from "./pages/N3Page";
 import CustomPage from "./pages/CustomPage";
 import SupportPage from "./pages/SupportPage";
 import SettingsPage from "./pages/SettingsPage";
-import WrongNotePage from "./pages/WrongNotePage";
-import MyPage from "./pages/MyPage";
-import LoginRegisterPage from "./pages/login/LoginRegisterPage"; // feat/6-login-register-question에서 추가
+import WrongNotePage from "./pages/wrongnote/WrongNotePage";
+import MyPage from "./pages/home/MyPage";
+import LoginRegisterPage from "./pages/login/LoginRegisterPage";
 
 import "./index.css";
 
@@ -26,7 +31,7 @@ function App() {
           <TopBar />
           <div className="page-content">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<MyPage />} />
               <Route path="/review" element={<ReviewPage />} />
               <Route path="/n1" element={<N1Page />} />
               <Route path="/n2" element={<N2Page />} />
@@ -35,9 +40,8 @@ function App() {
               <Route path="/support" element={<SupportPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/wrong-note" element={<WrongNotePage />} />
-              <Route path="/mypage" element={<MyPage />} />
-              {/* 로그인/회원가입 페이지 라우트 추가. 필요에 따라 경로를 조정하세요. */}
               <Route path="/login" element={<LoginRegisterPage />} />
+              <Route path="/register" element={<LoginRegisterPage />} />
             </Routes>
           </div>
         </div>
