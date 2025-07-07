@@ -1,16 +1,72 @@
-/* 전체 폰트 및 기본 스타일 */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f9fafb;  /* 연한 배경 */
+/* 기본 설정: dev/1.0.1에서 가져옴 */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  /* feat/3-sidebar-main-page의 배경색을 유지 */
+  background-color: #f9fafb; /* 연한 배경 */ 
+
+  /* feat/3-sidebar-main-page의 글자색으로 변경하거나, dev의 기본으로 둘 수 있음. 일단 dev 기본 유지 */
+  color: rgba(255, 255, 255, 0.87); 
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 전체 레이아웃: 사이드바 + 메인 */
+/* 링크 스타일: dev/1.0.1에서 가져옴 */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+/* body 스타일: feat/3-sidebar-main-page의 기본 스타일 유지 */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif; /* feat/3-sidebar-main-page 폰트 유지 */
+  background-color: #f9fafb; /* feat/3-sidebar-main-page 배경색 유지 */
+  /* dev/1.0.1의 flex, place-items 등은 container에서 처리되므로 제거 */
+}
+
+/* h1 스타일: dev/1.0.1에서 가져옴 */
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* 일반 버튼 스타일: dev/1.0.1에서 가져옴 (사이드바 버튼과 구분) */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* 전체 레이아웃: 사이드바 + 메인 (feat/3-sidebar-main-page) */
 .container {
   display: flex;
 }
 
-/* ✅ 사이드바 스타일 */
+/* 사이드바 스타일 (feat/3-sidebar-main-page) */
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -49,15 +105,13 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-
-
-/* ✅ 메인 컨텐츠 영역 스타일 */
+/* 메인 컨텐츠 영역 스타일 (feat/3-sidebar-main-page) */
 .main-content {
   flex-grow: 1;
   padding: 20px;
 }
 
-/* ✅ 프로필 섹션 */
+/* 프로필 섹션 (feat/3-sidebar-main-page) */
 .profile {
   display: flex;
   align-items: center;
@@ -72,7 +126,7 @@ body {
   border: 2px solid #ccc;
 }
 
-/* ✅ 학습 가이드 섹션 */
+/* 학습 가이드 섹션 (feat/3-sidebar-main-page) */
 .guide {
   background-color: #f0f4f8;
   padding: 15px;
@@ -105,4 +159,18 @@ body {
 .circular-stat {
   width: 100px;
   text-align: center;
+}
+
+/* 미디어 쿼리 (dev/1.0.1에서 가져옴) */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }

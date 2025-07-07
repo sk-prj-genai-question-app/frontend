@@ -10,6 +10,8 @@ import N3Page from './pages/N3Page';
 import CustomPage from './pages/CustomPage';
 import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';
+import WrongNotePage from './pages/WrongNotePage';
+import MyPage from './pages/MyPage';
 
 import './index.css';
 
@@ -28,6 +30,8 @@ function App() {
             <Route path="/custom" element={<CustomPage />} />
             <Route path="/support" element={<SupportPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/wrong-note" element={<WrongNotePage />} />
+            <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </div>
       </div>
