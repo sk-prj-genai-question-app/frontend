@@ -1,11 +1,17 @@
 import React from 'react';
-import LoginRegisterPage from './pages/login/LoginRegisterPage'; // 경로가 다르면 수정
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginRegisterPage from './pages/login/LoginRegisterPage';
+import JLPTQuestionPage from './pages/question/JLPTQuestionPage';
 
 function App() {
   return (
-    <div className="App">
-      <LoginRegisterPage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<JLPTQuestionPage />} />
+        <Route path="/login" element={<LoginRegisterPage />} />
+        <Route path="/question" element={<JLPTQuestionPage />} />
+      </Routes>
+    </Router>
   );
 }
 

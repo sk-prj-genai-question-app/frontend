@@ -35,6 +35,15 @@
   cursor: pointer;
 }
 
+.dropdown {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+}
+
 .question-box {
   margin-top: 2rem;
   padding: 1rem;
@@ -42,4 +51,14 @@
   border-radius: 12px;
   text-align: left;
   white-space: pre-wrap;
+}
+
+.info {
+  color: #10b981;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.error {
+  color: crimson;
 }
