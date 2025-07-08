@@ -35,7 +35,7 @@ const LoginForm = () => {
     try {
       const data = await login(email, password);
       console.log('로그인 성공:', data);
-      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('email', email);
       window.location.href = '/';
     } catch (error) {
