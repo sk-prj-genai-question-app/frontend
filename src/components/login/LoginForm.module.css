@@ -1,3 +1,28 @@
+.error {
+  border-color: #ff6868;
+  background-color: #fff0f0;
+}
+
+.errorMessage {
+  color: #e53935;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.submitError {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+  background-color: #fdecea;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #f44336;
+}
+
 .loginForm {
   width: 320px;
   margin: 50px auto;

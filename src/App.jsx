@@ -14,6 +14,8 @@ import MyPage from './pages/home/MyPage';
 import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
 
+import ProtectedRoute from './components/common/ProtectedRoute';
+
 import './index.css';
 
 function App() {
@@ -25,15 +27,72 @@ function App() {
           <TopBar />
           <div className="page-content">
             <Routes>
-              {/* dev/1.0.1의 라우트들 */}
-              <Route path="/" element={<MyPage />} />
-              <Route path="/review" element={<ReviewPage />} />
-              <Route path="/generate-problem" element={<GenerateProblemPage />} />
-              <Route path="/solve-problem" element={<SolveProblemPage />} />
-              <Route path="/custom" element={<CustomPage />} />
-              <Route path="/support" element={<SupportPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/wrong-note" element={<WrongNotePage />} />
+              {/* 로그인 필요 페이지들은 ProtectedRoute로 감싸기 */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <MyPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/review"
+                element={
+                  <ProtectedRoute>
+                    <ReviewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/generate-problem"
+                element={
+                  <ProtectedRoute>
+                    <GenerateProblemPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/solve-problem"
+                element={
+                  <ProtectedRoute>
+                    <SolveProblemPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/custom"
+                element={
+                  <ProtectedRoute>
+                    <CustomPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/support"
+                element={
+                  <ProtectedRoute>
+                    <SupportPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <SettingsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/wrong-note"
+                element={
+                  <ProtectedRoute>
+                    <WrongNotePage />
+                  </ProtectedRoute>
+                }
+              />
+              {/* 로그인, 회원가입 페이지는 보호 안 함 */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
             </Routes>
