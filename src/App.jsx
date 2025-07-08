@@ -11,7 +11,8 @@ import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';
 import WrongNotePage from './pages/wrongnote/WrongNotePage';
 import MyPage from './pages/home/MyPage';
-import LoginRegisterPage from './pages/login/LoginRegisterPage';
+import LoginPage from './pages/login/LoginPage';
+import RegisterPage from './pages/login/RegisterPage';
 
 import './index.css';
 
@@ -33,8 +34,8 @@ function App() {
               <Route path="/support" element={<SupportPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/wrong-note" element={<WrongNotePage />} />
-              <Route path="/login" element={<LoginRegisterPage />} />
-              <Route path="/register" element={<LoginRegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
             </Routes>
           </div>
         </div>

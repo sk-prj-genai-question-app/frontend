@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../../pages/login/LoginRegisterPage.css';
 import { login } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
+import styles from './LoginForm.module.css';  // ✅ 모듈 CSS import
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -13,18 +13,23 @@ const LoginForm = () => {
     try {
       const data = await login(email, password);
       console.log('로그인 성공:', data);
-      localStorage.setItem('accessToken', data.accessToken);  // ✅ accessToken 저장
-      navigate('/');  // 홈으로 이동
+      localStorage.setItem('accessToken', data.accessToken);
+      navigate('/');
     } catch (error) {
       console.error('로그인 실패:', error);
       alert('로그인 실패! 아이디/비밀번호를 확인하세요.');
     }
   };
 
+  const goToRegister = () => {
+    navigate('/register');
+  };
+
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className={styles.loginForm}>
+      <h2 className={styles.formTitle}>로그인</h2>
       <input
-        className="form-input"
+        className={styles.formInput}
         type="email"
         placeholder="이메일"
         value={email}
@@ -32,15 +37,22 @@ const LoginForm = () => {
         required
       />
       <input
-        className="form-input"
+        className={styles.formInput}
         type="password"
         placeholder="비밀번호"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit" className="form-button">
+      <button type="submit" className={styles.formButton}>
         로그인
+      </button>
+      <button
+        type="button"
+        className={`${styles.formButton} ${styles.registerButton}`}
+        onClick={goToRegister}
+      >
+        회원가입
       </button>
     </form>
   );

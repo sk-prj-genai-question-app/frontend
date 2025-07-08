@@ -1,0 +1,51 @@
+.loginForm {
+  width: 320px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.formTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.formButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.formButton:hover {
+  background-color: #284cae;
+}
+
+.registerButton {
+  background-color: #1976d2;
+}
+
+.registerButton:hover {
+  background-color: #284cae;
+}
