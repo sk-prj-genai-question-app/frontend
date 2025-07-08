@@ -11,6 +11,7 @@ import TopBar from './components/bar/TopBar';
 import ReviewPage from './pages/ReviewPage';
 import GenerateProblemPage from './pages/problem/GenerateProblemPage';
 import SolveProblemPage from './pages/problem/SolveProblemPage';
+import ResultPage from './pages/problem/ResultPage';
 import CustomPage from './pages/CustomPage';
 import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';
@@ -45,10 +46,10 @@ const LayoutWrapper = ({ children }) => {
 function App() {
   return (
     <Router>
-      {/* refactor/22-cleanup-ui-impprove의 LayoutWrapper를 사용하여 페이지 레이아웃을 관리 */}
+      {/* LayoutWrapper를 사용하여 페이지 레이아웃을 관리 (이전 병합 결과 유지) */}
       <LayoutWrapper>
         <Routes>
-          {/* dev/1.1.0의 ProtectedRoute로 감싸진 라우트들 */}
+          {/* ProtectedRoute로 감싸진 라우트들 (이전 병합 결과 유지) */}
           <Route
             path="/"
             element={
@@ -78,6 +79,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <SolveProblemPage />
+              </ProtectedRoute>
+            }
+          />
+          {/* ✅ ResultPage 라우트 추가 및 ProtectedRoute로 감싸기 */}
+          <Route
+            path="/result"
+            element={
+              <ProtectedRoute>
+                <ResultPage />
               </ProtectedRoute>
             }
           />
@@ -114,7 +124,7 @@ function App() {
             }
           />
 
-          {/* 로그인, 회원가입 페이지는 보호 안 함 (dev/1.1.0 기준) */}
+          {/* 로그인, 회원가입 페이지는 보호 안 함 (이전 병합 결과 유지) */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>

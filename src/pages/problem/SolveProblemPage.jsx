@@ -6,31 +6,34 @@ import './SolveProblemPage.css';
 const SolveProblemPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const {
-    problem: initialProblem,
+    problem: singleProblem,
+    problems: multipleProblems,
     numProblems,
     initialLevel,
     initialProblemType,
   } = location.state || {};
 
-  const [currentProblem, setCurrentProblem] = useState(initialProblem);
+  const [problemHistory, setProblemHistory] = useState(
+    multipleProblems?.length > 0 ? multipleProblems : [singleProblem]
+  );
   const [currentProblemIndex, setCurrentProblemIndex] = useState(1);
+  const [currentProblem, setCurrentProblem] = useState(
+    multipleProblems?.length > 0 ? multipleProblems[0] : singleProblem
+  );
+
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isLoadingNewProblem, setIsLoadingNewProblem] = useState(false);
-  // New state to store problem history
-  const [problemHistory, setProblemHistory] = useState([initialProblem]);
+  const [correctCount, setCorrectCount] = useState(0);
 
   useEffect(() => {
-    if (!initialProblem) {
+    if (!currentProblem) {
       console.error('No initial problem data received.');
-      navigate('/'); // Redirect to home if no initial problem
+      navigate('/');
     }
-  }, [initialProblem, navigate]);
-
-  if (!currentProblem) {
-    return <div className="solve-problem-page">문제 데이터를 불러오는 중입니다...</div>;
-  }
+  }, [currentProblem, navigate]);
 
   const handleChoiceClick = (choiceNumber) => {
     setSelectedChoice(choiceNumber);
@@ -38,6 +41,9 @@ const SolveProblemPage = () => {
 
   const handleSubmitAnswer = () => {
     setShowAnswer(true);
+    if (selectedChoice === currentProblem.answerNumber) {
+      setCorrectCount((prev) => prev + 1);
+    }
   };
 
   const handleNextProblem = async () => {
@@ -45,22 +51,20 @@ const SolveProblemPage = () => {
       setIsLoadingNewProblem(true);
       try {
         let nextProblem;
-        // If we have problems in history beyond current index, use them
+
         if (currentProblemIndex < problemHistory.length) {
           nextProblem = problemHistory[currentProblemIndex];
         } else {
-          // Otherwise, generate a new problem
           const response = await axios.post('http://127.0.0.1:8000/problems/generate', {
             level: initialLevel,
             problem_type: initialProblemType,
           });
-          console.log("Received problem data:", response.data.data);
           nextProblem = response.data.data;
-          setProblemHistory((prevHistory) => [...prevHistory, nextProblem]);
+          setProblemHistory((prev) => [...prev, nextProblem]);
         }
 
         setCurrentProblem(nextProblem);
-        setCurrentProblemIndex((prevIndex) => prevIndex + 1);
+        setCurrentProblemIndex((prev) => prev + 1);
         setSelectedChoice(null);
         setShowAnswer(false);
       } catch (error) {
@@ -70,32 +74,34 @@ const SolveProblemPage = () => {
         setIsLoadingNewProblem(false);
       }
     } else {
-      // End of problems, navigate to home
-      navigate('/');
+      // 문제 끝 → 결과 페이지로 이동
+      navigate('/result', {
+        state: {
+          total: numProblems,
+          correct: correctCount,
+          problems: problemHistory,
+          initialLevel,
+          initialProblemType,
+        },
+      });
     }
   };
 
   const handlePreviousProblem = () => {
     if (currentProblemIndex > 1) {
-      const previousProblem = problemHistory[currentProblemIndex - 2]; // -2 because index is 1-based and array is 0-based
+      const previousProblem = problemHistory[currentProblemIndex - 2];
       setCurrentProblem(previousProblem);
-      setCurrentProblemIndex((prevIndex) => prevIndex - 1);
+      setCurrentProblemIndex((prev) => prev - 1);
       setSelectedChoice(null);
       setShowAnswer(false);
     }
   };
 
   const getChoiceClass = (choiceNumber) => {
-    if (!showAnswer) {
-      return selectedChoice === choiceNumber ? 'selected' : '';
-    }
-    // 정답 표시 모드
-    if (choiceNumber === currentProblem.answerNumber) {
-      return 'correct';
-    }
-    if (selectedChoice === choiceNumber && selectedChoice !== currentProblem.answerNumber) {
+    if (!showAnswer) return selectedChoice === choiceNumber ? 'selected' : '';
+    if (choiceNumber === currentProblem.answerNumber) return 'correct';
+    if (selectedChoice === choiceNumber && selectedChoice !== currentProblem.answerNumber)
       return 'incorrect';
-    }
     return '';
   };
 
@@ -107,7 +113,7 @@ const SolveProblemPage = () => {
       </p>
       <div className="problem-container">
         <p className="problem-level-type">
-          [{currentProblem.level}]{' '}
+          [{currentProblem.level}]
           {currentProblem.problemType === 'V'
             ? '어휘'
             : currentProblem.problemType === 'G'
@@ -125,15 +131,16 @@ const SolveProblemPage = () => {
         )}
 
         <div className="choices-container">
-          {currentProblem.choices && currentProblem.choices.map((choice) => (
-            <div
-              key={choice.number}
-              className={`choice-item ${getChoiceClass(choice.number)}`}
-              onClick={() => !showAnswer && handleChoiceClick(choice.number)}
-            >
-              <span className="choice-number">{choice.number}.</span> {choice.content}
-            </div>
-          ))}
+          {currentProblem.choices &&
+            currentProblem.choices.map((choice) => (
+              <div
+                key={choice.number}
+                className={`choice-item ${getChoiceClass(choice.number)}`}
+                onClick={() => !showAnswer && handleChoiceClick(choice.number)}
+              >
+                <span className="choice-number">{choice.number}.</span> {choice.content}
+              </div>
+            ))}
         </div>
 
         {!showAnswer && (
@@ -150,7 +157,7 @@ const SolveProblemPage = () => {
           <div className="explanation-container">
             <h4>해설</h4>
             <p>{currentProblem.explanation}</p>
-            <div className="navigation-buttons"> {/* New div for navigation buttons */}
+            <div className="navigation-buttons">
               <button
                 className="previous-problem-button"
                 onClick={handlePreviousProblem}
@@ -173,6 +180,12 @@ const SolveProblemPage = () => {
           </div>
         )}
       </div>
+
+      {isLoadingNewProblem && (
+        <div className="loading-overlay">
+          <div className="loading-text">다음 문제를 생성 중입니다...</div>
+        </div>
+      )}
     </div>
   );
 };
