@@ -8,11 +8,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 800px;
   margin: 50px auto;
+  position: relative;
 }
 
 .solve-problem-page h2 {
   color: #333;
   margin-bottom: 30px;
+}
+
+.problem-count {
+  margin-bottom: 10px;
+  color: #555;
 }
 
 .problem-container {
@@ -48,18 +54,18 @@
   padding: 15px;
   border-radius: 5px;
   margin-bottom: 20px;
-  white-space: pre-wrap; /* Preserve whitespace and wrap text */
-  word-wrap: break-word; /* Break long words */
-  max-height: 300px; /* 독해 지문 최대 높이 설정 (필요에 따라 조절) */
-  overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤바 생성 */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .problem-content pre {
   margin: 0;
   font-family: inherit;
   font-size: 1em;
-  white-space: pre-wrap; /* pre 태그 내부 텍스트 줄 바꿈 */
-  word-break: break-word; /* 긴 단어 강제 줄 바꿈 */
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .choices-container {
@@ -143,18 +149,59 @@
   margin-bottom: 20px;
 }
 
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.previous-problem-button,
 .next-problem-button {
-  padding: 12px 25px;
-  background-color: #28a745;
-  color: white;
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
-  font-size: 18px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
+}
+
+.previous-problem-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.previous-problem-button:hover {
+  background-color: #5a6268;
+}
+
+.next-problem-button {
+  background-color: #28a745;
+  color: white;
 }
 
 .next-problem-button:hover {
   background-color: #218838;
+}
+
+/* ✅ 로딩 오버레이 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px 40px;
+  border-radius: 10px;
 }
