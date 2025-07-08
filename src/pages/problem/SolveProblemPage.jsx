@@ -39,10 +39,24 @@ const SolveProblemPage = () => {
     setSelectedChoice(choiceNumber);
   };
 
-  const handleSubmitAnswer = () => {
+  const handleSubmitAnswer = async () => {
     setShowAnswer(true);
-    if (selectedChoice === currentProblem.answerNumber) {
+    const isCorrect = selectedChoice === currentProblem.answerNumber;
+
+    if (isCorrect) {
       setCorrectCount((prev) => prev + 1);
+    }
+
+    // ✅ 백엔드에 정답 기록 저장
+    try {
+      const userId = 1; // ⚠️ 추후 로그인 시스템 연동 필요
+      await axios.post('http://localhost:8080/api/answer-record', {
+        user_id: userId,
+        problem_id: currentProblem.id,
+        user_answer: selectedChoice,
+      });
+    } catch (error) {
+      console.error('문제 풀이 기록 저장 실패', error);
     }
   };
 
@@ -74,7 +88,7 @@ const SolveProblemPage = () => {
         setIsLoadingNewProblem(false);
       }
     } else {
-      // 문제 끝 → 결과 페이지로 이동
+      // 모든 문제 풀이 완료 → 결과 페이지로 이동
       navigate('/result', {
         state: {
           total: numProblems,
