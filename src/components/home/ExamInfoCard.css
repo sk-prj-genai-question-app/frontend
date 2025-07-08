@@ -1,0 +1,40 @@
+.exam-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  height: 275px;
+}
+
+.pass-rate {
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.pass-rate .title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.pass-rate .rate-values {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.95rem;
+}
+
+.pass-rate .rate-values span {
+  display: inline-block;
+  margin-right: 12px; /* 간격을 조금만 줘서 더 촘촘하게 */
+}
+
+.news-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.news-link:hover {
+  color: #007BFF; /* 파란색으로 변경 */
+}
