@@ -12,7 +12,6 @@ const ExamInfoCard = () => {
         <br />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1: 34.5% &nbsp;&nbsp; N2: 37.1%
         &nbsp;&nbsp; N3: 41.8% <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N4: 47.2% &nbsp;&nbsp; N5: 52.6%
       </p>
       <p>
         📰{" "}
