@@ -33,31 +33,15 @@ const mockData = [
     question: "질문: 男の人は何をしたいと言っていますか？",
     options: ["공원에 가고 싶다", "커피를 마시고 싶다", "친구를 만나고 싶다", "영화를 보고 싶다"],
     level: "N3",
-    subject: "청해",
+    subject: "청언어지식(문법)・독해",
   },
   {
     id: 5,
     correct: false,
     question: "질문: 女の人はいつ来ると言っていますか？",
     options: ["3시", "4시", "5시", "6시"],
-    level: "N2",
-    subject: "청해",
-  },
-  {
-    id: 6,
-    correct: false,
-    question: "'읽었습니다'에 해당하는 표현은?",
-    options: ["読んだ", "読んでる", "読む", "読まない"],
-    level: "N4",
-    subject: "언어지식(문법)・독해",
-  },
-  {
-    id: 7,
-    correct: false,
-    question: "다음 듣기 질문: お父さんは今どこにいますか？",
-    options: ["회사", "집", "학교", "병원"],
-    level: "N5",
-    subject: "청해",
+    level: "N3",
+    subject: "언어지식(문자・어휘)",
   },
 ];
 
@@ -65,16 +49,13 @@ const allSubjects = [
   "언어지식(문자・어휘・문법)・독해",
   "언어지식(문자・어휘)",
   "언어지식(문법)・독해",
-  "청해",
 ];
 
 const subjectOptionsByLevel = {
   전체: allSubjects,
-  N1: ["언어지식(문자・어휘・문법)・독해", "청해"],
-  N2: ["언어지식(문자・어휘・문법)・독해", "청해"],
-  N3: ["언어지식(문자・어휘)", "언어지식(문법)・독해", "청해"],
-  N4: ["언어지식(문자・어휘)", "언어지식(문법)・독해", "청해"],
-  N5: ["언어지식(문자・어휘)", "언어지식(문법)・독해", "청해"],
+  N1: ["언어지식(문자・어휘・문법)・독해"],
+  N2: ["언어지식(문자・어휘・문법)・독해"],
+  N3: ["언어지식(문자・어휘)", "언어지식(문법)・독해"],
 };
 
 const WrongNotePage = () => {
@@ -120,8 +101,6 @@ const WrongNotePage = () => {
             <option value="N1">N1</option>
             <option value="N2">N2</option>
             <option value="N3">N3</option>
-            <option value="N4">N4</option>
-            <option value="N5">N5</option>
           </select>
 
           <Select
