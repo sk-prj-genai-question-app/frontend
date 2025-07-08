@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Select from "react-select";
 import "./WrongNotePage.css";
 
@@ -31,7 +32,12 @@ const mockData = [
     id: 4,
     correct: true,
     question: "질문: 男の人は何をしたいと言っていますか？",
-    options: ["공원에 가고 싶다", "커피를 마시고 싶다", "친구를 만나고 싶다", "영화를 보고 싶다"],
+    options: [
+      "공원에 가고 싶다",
+      "커피를 마시고 싶다",
+      "친구를 만나고 싶다",
+      "영화를 보고 싶다",
+    ],
     level: "N3",
     subject: "청언어지식(문법)・독해",
   },
@@ -58,32 +64,82 @@ const subjectOptionsByLevel = {
   N3: ["언어지식(문자・어휘)", "언어지식(문법)・독해"],
 };
 
-const WrongNotePage = () => {
+const WrongNotePage = ({ userId }) => {
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [levelFilter, setLevelFilter] = useState("전체");
   const [subjectFilter, setSubjectFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState("전체");
 
+  // 📡 API 요청
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("accessToken"); // ✅ 여기 수정!
+
+        if (!token) throw new Error("🙅 accessToken이 없습니다.");
+
+        const res = await axios.get(
+          `http://localhost:8080/api/answer-record/user/1`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // ✅ Authorization 헤더에 넣기
+            },
+          }
+        );
+
+        console.log("✅ 응답 데이터 전체:", res.data);
+
+        const rawData = res.data.data;
+        if (!Array.isArray(rawData)) {
+          throw new Error("응답 형식이 배열이 아닙니다.");
+        }
+
+        const formatted = rawData.map((item) => ({
+          id: item.recordId,
+          correct: item.isCorrect,
+          level: item.level,
+          subject: `${item.problemTitleParent}・${item.problemTitleChild}`,
+          question: item.problemContent,
+          userAnswer: item.userAnswer,
+          answerNumber: item.answerNumber,
+          explanation: item.explanation,
+          options: item.choices?.map((c) => c.content) || [],
+        }));
+
+        setAllData(formatted);
+      } catch (err) {
+        console.error("❌ 오답노트 데이터 불러오기 실패:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // 🔍 필터링
+  useEffect(() => {
+    const result = allData.filter((item) => {
+      const levelMatch = levelFilter === "전체" || item.level === levelFilter;
+      const subjectMatch =
+        subjectFilter.length === 0 || subjectFilter.includes(item.subject);
+      const statusMatch =
+        statusFilter === "전체" ||
+        (statusFilter === "정답" && item.correct) ||
+        (statusFilter === "오답" && !item.correct);
+      return levelMatch && subjectMatch && statusMatch;
+    });
+    setFilteredData(result);
+  }, [allData, levelFilter, subjectFilter, statusFilter]);
+
   const handleLevelChange = (e) => {
-    const selected = e.target.value;
-    setLevelFilter(selected);
-    setSubjectFilter([]); // 과목 초기화
+    setLevelFilter(e.target.value);
+    setSubjectFilter([]);
   };
 
   const handleSubjectChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((opt) => opt.value);
     setSubjectFilter(selectedValues);
   };
-
-  const filteredData = mockData.filter((item) => {
-    const levelMatch = levelFilter === "전체" || item.level === levelFilter;
-    const subjectMatch =
-      subjectFilter.length === 0 || subjectFilter.includes(item.subject);
-    const statusMatch =
-      statusFilter === "전체" ||
-      (statusFilter === "정답" && item.correct) ||
-      (statusFilter === "오답" && !item.correct);
-    return levelMatch && subjectMatch && statusMatch;
-  });
 
   const subjectOptions = subjectOptionsByLevel[levelFilter]?.map((subj) => ({
     label: subj,
@@ -153,7 +209,9 @@ const WrongNotePage = () => {
 
                 <div className="button-group">
                   <button>다시 풀기</button>
-                  <button>해설 보기</button>
+                  <button onClick={() => alert(`📘 해설: ${item.explanation}`)}>
+                    해설 보기
+                  </button>
                   <button className="delete">삭제</button>
                 </div>
               </div>
