@@ -75,24 +75,37 @@ const WrongNotePage = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("accessToken"); // ✅ 여기 수정!
+        const token = localStorage.getItem("accessToken");
 
-        if (!token) throw new Error("🙅 accessToken이 없습니다.");
+        if (!token) {
+          console.log("⛔ accessToken 없음");
+          return;
+        }
+
+        const payload = JSON.parse(atob(token.split(".")[1])); // 중간 부분 디코딩
+        const userId = payload.id;
 
         const res = await axios.get(
-          `http://localhost:8080/api/answer-record/user/1`,
+          `http://localhost:8080/api/answer-record/user/${userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // ✅ Authorization 헤더에 넣기
+              Authorization: `Bearer ${token}`,
             },
           }
         );
 
-        console.log("✅ 응답 데이터 전체:", res.data);
+        const rawData = res?.data?.data;
+        // console.log("✅ 응답 전체:", res);
+        // console.log("✅ 응답 데이터:", res.data);
 
-        const rawData = res.data.data;
+        if (!rawData) {
+          console.log("📭 응답이 비어 있어요! (rawData가 undefined)");
+          return;
+        }
+
         if (!Array.isArray(rawData)) {
-          throw new Error("응답 형식이 배열이 아닙니다.");
+          console.log("❌ 응답 형식이 배열이 아닙니다.");
+          return;
         }
 
         const formatted = rawData.map((item) => ({
