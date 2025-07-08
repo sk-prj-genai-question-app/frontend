@@ -6,6 +6,8 @@ import TopBar from './components/bar/TopBar';
 import ReviewPage from './pages/ReviewPage';
 import GenerateProblemPage from './pages/problem/GenerateProblemPage';
 import SolveProblemPage from './pages/problem/SolveProblemPage';
+import ResultPage from './pages/problem/ResultPage'; // ✅ 추가
+
 import CustomPage from './pages/CustomPage';
 import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';
@@ -29,6 +31,7 @@ function App() {
               <Route path="/review" element={<ReviewPage />} />
               <Route path="/generate-problem" element={<GenerateProblemPage />} />
               <Route path="/solve-problem" element={<SolveProblemPage />} />
+              <Route path="/result" element={<ResultPage />} /> {/* ✅ 결과 페이지 경로 추가 */}
               <Route path="/custom" element={<CustomPage />} />
               <Route path="/support" element={<SupportPage />} />
               <Route path="/settings" element={<SettingsPage />} />
