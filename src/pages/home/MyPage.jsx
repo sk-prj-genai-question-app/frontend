@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileCard from "../../components/home/ProfileCard";
-import ExamInfoCard from "../../components/wrongnote/ExamInfoCard";
+import ExamInfoCard from "../../components/home/ExamInfoCard";
 import ProgressCard from "../../components/home/ProgressCard";
 import "./MyPage.css";
 
