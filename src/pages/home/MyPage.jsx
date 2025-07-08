@@ -8,7 +8,6 @@ const MyPage = () => {
   const user = {
     name: "User",
     email: "user@example.com",
-    phone: "+81 010-1234-5678",
     avatar: "/user.png",
   };
 

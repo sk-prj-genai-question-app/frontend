@@ -1,0 +1,76 @@
+.error {
+  border-color: #ff6868;
+  background-color: #fff0f0;
+}
+
+.errorMessage {
+  color: #e53935;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.submitError {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+  background-color: #fdecea;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #f44336;
+}
+
+.loginForm {
+  width: 320px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.formTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.formButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.formButton:hover {
+  background-color: #284cae;
+}
+
+.registerButton {
+  background-color: #1976d2;
+}
+
+.registerButton:hover {
+  background-color: #284cae;
+}

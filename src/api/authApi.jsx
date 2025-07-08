@@ -14,10 +14,10 @@ export const login = async (email, password) => {
 };
 
 // 회원가입
-export const register = async (nickname, email, password, passwordCheck) => {
+export const register = async (email, password, passwordCheck) => {
   const response = await axios.post(
     `${API_BASE_URL}/auth/signup`,
-    { nickname, email, password, passwordCheck, }
+    { email, password, passwordCheck, }
   );
   return response.data;  // 회원가입 응답 데이터
 };
