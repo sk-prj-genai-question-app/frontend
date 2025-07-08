@@ -1,47 +1,134 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from 'react-router-dom';
 import Sidebar from './components/bar/Sidebar';
 import TopBar from './components/bar/TopBar';
 
 import ReviewPage from './pages/ReviewPage';
 import GenerateProblemPage from './pages/problem/GenerateProblemPage';
 import SolveProblemPage from './pages/problem/SolveProblemPage';
-import ResultPage from './pages/problem/ResultPage'; // ✅ 추가
-
+import ResultPage from './pages/problem/ResultPage';
 import CustomPage from './pages/CustomPage';
 import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';
 import WrongNotePage from './pages/wrongnote/WrongNotePage';
 import MyPage from './pages/home/MyPage';
-import LoginRegisterPage from './pages/login/LoginRegisterPage';
+import LoginPage from './pages/login/LoginPage';
+import RegisterPage from './pages/login/RegisterPage';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 import './index.css';
+
+const LayoutWrapper = ({ children }) => {
+  const location = useLocation();
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register';
+
+  if (isAuthPage) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div className="container">
+      <Sidebar />
+      <div className="main-content">
+        <TopBar />
+        <div className="page-content">{children}</div>
+      </div>
+    </div>
+  );
+};
 
 function App() {
   return (
     <Router>
-      <div className="container">
-        <Sidebar />
-        <div className="main-content">
-          <TopBar />
-          <div className="page-content">
-            <Routes>
-              {/* dev/1.0.1의 라우트들 */}
-              <Route path="/" element={<MyPage />} />
-              <Route path="/review" element={<ReviewPage />} />
-              <Route path="/generate-problem" element={<GenerateProblemPage />} />
-              <Route path="/solve-problem" element={<SolveProblemPage />} />
-              <Route path="/result" element={<ResultPage />} /> {/* ✅ 결과 페이지 경로 추가 */}
-              <Route path="/custom" element={<CustomPage />} />
-              <Route path="/support" element={<SupportPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/wrong-note" element={<WrongNotePage />} />
-              <Route path="/login" element={<LoginRegisterPage />} />
-              <Route path="/register" element={<LoginRegisterPage />} />
-            </Routes>
-          </div>
-        </div>
-      </div>
+      {/* LayoutWrapper를 사용하여 페이지 레이아웃을 관리 (이전 병합 결과 유지) */}
+      <LayoutWrapper>
+        <Routes>
+          {/* ProtectedRoute로 감싸진 라우트들 (이전 병합 결과 유지) */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <MyPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/review"
+            element={
+              <ProtectedRoute>
+                <ReviewPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/generate-problem"
+            element={
+              <ProtectedRoute>
+                <GenerateProblemPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/solve-problem"
+            element={
+              <ProtectedRoute>
+                <SolveProblemPage />
+              </ProtectedRoute>
+            }
+          />
+          {/* ✅ ResultPage 라우트 추가 및 ProtectedRoute로 감싸기 */}
+          <Route
+            path="/result"
+            element={
+              <ProtectedRoute>
+                <ResultPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/custom"
+            element={
+              <ProtectedRoute>
+                <CustomPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <ProtectedRoute>
+                <SupportPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/wrong-note"
+            element={
+              <ProtectedRoute>
+                <WrongNotePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 로그인, 회원가입 페이지는 보호 안 함 (이전 병합 결과 유지) */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </LayoutWrapper>
     </Router>
   );
 }
