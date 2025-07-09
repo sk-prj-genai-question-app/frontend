@@ -1,5 +1,6 @@
 // WrongNotePage.jsx
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import "./WrongNotePage.css";
@@ -25,6 +26,8 @@ const WrongNotePage = () => {
   const [statusFilter, setStatusFilter] = useState("전체");
   const [openExplanations, setOpenExplanations] = useState({});
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,9 +46,9 @@ const WrongNotePage = () => {
 
         const rawData = res?.data?.data;
         if (!Array.isArray(rawData)) return;
-        res.data.data.forEach((item) => {
-          console.log("📌 정답 여부:", item.correct); // true 또는 false
-        });
+        // res.data.data.forEach((item) => {
+        //   console.log("📌 정답 여부:", item.correct); // true 또는 false
+        // });
         // console.log("res", rawData)
 
         const detailedData = await Promise.all(
@@ -60,6 +63,7 @@ const WrongNotePage = () => {
               const problem = probRes.data.data;
               return {
                 id: item.recordId,
+                questionId: item.questionId,
                 correct: item.correct,
                 level: item.level,
                 subject: item.problemType,
@@ -231,7 +235,10 @@ const WrongNotePage = () => {
                 </div>
               )}
               <div className="button-group">
-                <button>다시 풀기</button>
+                <button onClick={() => navigate(`/retry-problem/${item.questionId}`)}>
+                  다시 풀기
+                </button>
+
                 <button onClick={() => toggleExplanation(item.id)}>
                   {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                 </button>
