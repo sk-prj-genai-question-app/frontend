@@ -74,7 +74,7 @@ const WrongNotePage = ({ userId }) => {
               );
 
               const problem = probRes.data.data;
-              console.log("지문: ", problem.problemContent);
+              // console.log("지문: ", problem.problemContent);
 
               return {
                 id: item.recordId,
@@ -110,6 +110,36 @@ const WrongNotePage = ({ userId }) => {
 
     fetchData();
   }, []);
+
+  const handleDelete = async (recordId) => {
+    const token = localStorage.getItem("accessToken");
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const userId = payload.id;
+
+    try {
+      await axios.delete(
+        `http://localhost:8080/api/answer-record/user/${userId}/${recordId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // 삭제 후 상태 업데이트
+      setAllData((prev) => prev.filter((item) => item.id !== recordId));
+      window.confirm("🗑️ 삭제 성공!");
+    } catch (err) {
+      console.error("❌ 삭제 실패:", err);
+      alert("삭제 중 문제가 발생했어요!");
+    }
+  };
+
+  const confirmAndDelete = (id) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      handleDelete(id);
+    }
+  };
 
   // 🔍 필터링
   useEffect(() => {
@@ -227,14 +257,27 @@ const WrongNotePage = ({ userId }) => {
                   ))}
                 </ul>
                 {openExplanations[item.id] && (
-                  <div className="explanation-box">📘 {item.explanation}</div>
+                  <div className="explanation-box">
+                    <div className="explanation-title">해설</div>
+                    <div
+                      className="explanation-content"
+                      dangerouslySetInnerHTML={{
+                        __html: item.explanation.replace(/\n/g, "<br />"),
+                      }}
+                    />
+                  </div>
                 )}
                 <div className="button-group">
                   <button>다시 풀기</button>
                   <button onClick={() => toggleExplanation(item.id)}>
                     {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                   </button>
-                  <button className="delete">삭제</button>
+                  <button
+                    className="delete"
+                    onClick={() => confirmAndDelete(item.id)}
+                  >
+                    삭제
+                  </button>
                 </div>
               </div>
             ))}
