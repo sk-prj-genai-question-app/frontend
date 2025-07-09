@@ -34,12 +34,19 @@ const WrongNotePage = () => {
           return;
         }
 
-        const res = await axios.get("http://localhost:8080/api/answer-record/my-records", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "http://localhost:8080/api/answer-record/my-records?isCorrect=false",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         const rawData = res?.data?.data;
         if (!Array.isArray(rawData)) return;
+        res.data.data.forEach((item) => {
+          console.log("📌 정답 여부:", item.correct); // true 또는 false
+        });
+        // console.log("res", rawData)
 
         const detailedData = await Promise.all(
           rawData.map(async (item) => {
@@ -53,7 +60,7 @@ const WrongNotePage = () => {
               const problem = probRes.data.data;
               return {
                 id: item.recordId,
-                correct: item.isCorrect,
+                correct: item.correct,
                 level: item.level,
                 subject: item.problemType,
                 question: item.problemTitleParent,
@@ -88,9 +95,12 @@ const WrongNotePage = () => {
   const handleDelete = async (recordId) => {
     const token = localStorage.getItem("accessToken");
     try {
-      await axios.delete(`http://localhost:8080/api/answer-record/${recordId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `http://localhost:8080/api/answer-record/${recordId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setAllData((prev) => prev.filter((item) => item.id !== recordId));
       window.alert("🗑️ 삭제 성공!");
     } catch (err) {
@@ -110,10 +120,11 @@ const WrongNotePage = () => {
         subjectFilter.length === 0 || subjectFilter.includes(item.subject);
       const statusMatch =
         statusFilter === "전체" ||
-        (statusFilter === "정답" && item.correct) ||
-        (statusFilter === "오답" && !item.correct);
+        (statusFilter === "정답" && item.correct === true) ||
+        (statusFilter === "오답" && item.correct === false);
       return levelMatch && subjectMatch && statusMatch;
     });
+
     setFilteredData(result);
   }, [allData, levelFilter, subjectFilter, statusFilter]);
 
@@ -224,7 +235,10 @@ const WrongNotePage = () => {
                 <button onClick={() => toggleExplanation(item.id)}>
                   {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                 </button>
-                <button className="delete" onClick={() => confirmAndDelete(item.id)}>
+                <button
+                  className="delete"
+                  onClick={() => confirmAndDelete(item.id)}
+                >
                   삭제
                 </button>
               </div>
