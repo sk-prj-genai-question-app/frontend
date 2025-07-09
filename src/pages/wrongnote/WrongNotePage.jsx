@@ -1,5 +1,6 @@
 // WrongNotePage.jsx
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import styles from "./WrongNotePage.module.css";
@@ -25,6 +26,8 @@ const WrongNotePage = () => {
   const [statusFilter, setStatusFilter] = useState("전체");
   const [openExplanations, setOpenExplanations] = useState({});
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,15 +37,40 @@ const WrongNotePage = () => {
           return;
         }
 
-        const res = await axios.get("http://localhost:8080/api/answer-record/my-records", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "http://localhost:8080/api/answer-record/my-records?isCorrect=false",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         const rawData = res?.data?.data;
         if (!Array.isArray(rawData)) return;
 
+        // ✅ 문제별로 정답/오답 각각 가장 최신 기록만 남기기
+        const grouped = {};
+        rawData.forEach((item) => {
+          const qid = item.questionId;
+          if (!grouped[qid]) grouped[qid] = [];
+          grouped[qid].push(item);
+        });
+
+        const uniqueRecords = [];
+        for (const records of Object.values(grouped)) {
+          const latestCorrect = [...records]
+            .filter((r) => r.correct === true)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+          const latestIncorrect = [...records]
+            .filter((r) => r.correct === false)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+
+          if (latestCorrect) uniqueRecords.push(latestCorrect);
+          if (latestIncorrect) uniqueRecords.push(latestIncorrect);
+        }
+
+        // ✅ 문제 상세 정보 붙이기
         const detailedData = await Promise.all(
-          rawData.map(async (item) => {
+          uniqueRecords.map(async (item) => {
             try {
               const probRes = await axios.get(
                 `http://localhost:8080/api/problems/${item.questionId}`,
@@ -53,7 +81,8 @@ const WrongNotePage = () => {
               const problem = probRes.data.data;
               return {
                 id: item.recordId,
-                correct: item.isCorrect,
+                questionId: item.questionId,
+                correct: item.correct,
                 level: item.level,
                 subject: item.problemType,
                 question: item.problemTitleParent,
@@ -88,18 +117,24 @@ const WrongNotePage = () => {
   const handleDelete = async (recordId) => {
     const token = localStorage.getItem("accessToken");
     try {
-      await axios.delete(`http://localhost:8080/api/answer-record/${recordId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `http://localhost:8080/api/answer-record/${recordId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setAllData((prev) => prev.filter((item) => item.id !== recordId));
+      // TODO: window.alert 대신 커스텀 모달 사용
       window.alert("🗑️ 삭제 성공!");
     } catch (err) {
       console.error("❌ 삭제 실패:", err);
+      // TODO: window.alert 대신 커스텀 모달 사용
       window.alert("삭제 중 문제가 발생했어요!");
     }
   };
 
   const confirmAndDelete = (id) => {
+    // TODO: window.confirm 대신 커스텀 모달 사용
     if (window.confirm("정말 삭제하시겠습니까?")) handleDelete(id);
   };
 
@@ -110,10 +145,11 @@ const WrongNotePage = () => {
         subjectFilter.length === 0 || subjectFilter.includes(item.subject);
       const statusMatch =
         statusFilter === "전체" ||
-        (statusFilter === "정답" && item.correct) ||
-        (statusFilter === "오답" && !item.correct);
+        (statusFilter === "정답" && item.correct === true) ||
+        (statusFilter === "오답" && item.correct === false);
       return levelMatch && subjectMatch && statusMatch;
     });
+
     setFilteredData(result);
   }, [allData, levelFilter, subjectFilter, statusFilter]);
 
@@ -219,12 +255,21 @@ const WrongNotePage = () => {
                   />
                 </div>
               )}
-              <div className={styles.buttonGroup}>
-                <button>다시 풀기</button>
+              {/* ✅ 충돌 해결 부분: 다시 풀기 기능 추가 및 CSS 모듈 적용 */}
+              <div className={styles.buttonGroup}> {/* dev/1.3.1의 CSS 모듈 적용 */}
+                <button
+                  onClick={() => navigate(`/retry-problem/${item.questionId}`)} // feat/50-wrongnote-retake의 다시 풀기 기능 적용
+                >
+                  다시 풀기
+                </button>
+
                 <button onClick={() => toggleExplanation(item.id)}>
                   {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                 </button>
-                <button className={styles.delete} onClick={() => confirmAndDelete(item.id)}>
+                <button
+                  className={styles.delete} // dev/1.3.1의 CSS 모듈 적용
+                  onClick={() => confirmAndDelete(item.id)}
+                >
                   삭제
                 </button>
               </div>

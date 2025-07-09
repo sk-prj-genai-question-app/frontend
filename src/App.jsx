@@ -21,6 +21,7 @@ import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import ProfileEditPage from './pages/profile/ProfileEditPage';
+import RetryProblemPage from './pages/problem/RetryProblemPage';
 
 import './index.css';
 
@@ -130,6 +131,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProfileEditPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/retry-problem/:id"
+            element={
+              <ProtectedRoute>
+                <RetryProblemPage />
               </ProtectedRoute>
             }
           />
