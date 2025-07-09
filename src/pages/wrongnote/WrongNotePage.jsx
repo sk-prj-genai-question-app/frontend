@@ -46,13 +46,31 @@ const WrongNotePage = () => {
 
         const rawData = res?.data?.data;
         if (!Array.isArray(rawData)) return;
-        // res.data.data.forEach((item) => {
-        //   console.log("📌 정답 여부:", item.correct); // true 또는 false
-        // });
-        // console.log("res", rawData)
 
+        // ✅ 문제별로 정답/오답 각각 가장 최신 기록만 남기기
+        const grouped = {};
+        rawData.forEach((item) => {
+          const qid = item.questionId;
+          if (!grouped[qid]) grouped[qid] = [];
+          grouped[qid].push(item);
+        });
+
+        const uniqueRecords = [];
+        for (const records of Object.values(grouped)) {
+          const latestCorrect = [...records]
+            .filter((r) => r.correct === true)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+          const latestIncorrect = [...records]
+            .filter((r) => r.correct === false)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+
+          if (latestCorrect) uniqueRecords.push(latestCorrect);
+          if (latestIncorrect) uniqueRecords.push(latestIncorrect);
+        }
+
+        // ✅ 문제 상세 정보 붙이기
         const detailedData = await Promise.all(
-          rawData.map(async (item) => {
+          uniqueRecords.map(async (item) => {
             try {
               const probRes = await axios.get(
                 `http://localhost:8080/api/problems/${item.questionId}`,
@@ -235,7 +253,9 @@ const WrongNotePage = () => {
                 </div>
               )}
               <div className="button-group">
-                <button onClick={() => navigate(`/retry-problem/${item.questionId}`)}>
+                <button
+                  onClick={() => navigate(`/retry-problem/${item.questionId}`)}
+                >
                   다시 풀기
                 </button>
 
