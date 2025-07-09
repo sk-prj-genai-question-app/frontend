@@ -1,10 +1,15 @@
 .progress-card {
-  width: 180px;
+  width: 140px;
   padding: 16px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);  /* ✅ 그림자 강조 */
   text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.progress-card:hover {
+  transform: translateY(-4px);  /* ✅ 부드러운 마우스오버 */
 }
 
 .chart-container {
