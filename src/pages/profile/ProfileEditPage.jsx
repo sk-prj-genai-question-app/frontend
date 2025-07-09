@@ -1,31 +1,28 @@
-// ProfileEditPage.jsx
+// src/pages/profile/ProfileEditPage.jsx
 import React, { useState, useEffect } from 'react';
 import styles from './ProfileEditPage.module.css';
+import { verifyPassword, changePassword } from '../../api/authApi';  // ✅ 여기 핵심!
 
 const ProfileEditPage = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  
-  // 현재 비밀번호 입력 상태
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [currentPasswordError, setCurrentPasswordError] = useState('');
 
-  // 새 비밀번호 입력 상태
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [newPasswordError, setNewPasswordError] = useState('');
 
-  // 단계 관리: 'verify' (현재 비밀번호 검증), 'change' (비밀번호 변경 폼)
   const [step, setStep] = useState('verify');
 
   useEffect(() => {
-    // 로그인한 사용자 이메일, 이름 localStorage에서 불러오기 (또는 API 호출)
     const savedEmail = localStorage.getItem('email') || '';
     setEmail(savedEmail);
     setName(savedEmail.split('@')[0] || '');
   }, []);
 
-  // 현재 비밀번호 검증 함수 (실제론 API 호출 필요)
+  // ✅ 현재 비밀번호 검증
   const verifyCurrentPassword = async () => {
     setCurrentPasswordError('');
     if (!currentPassword) {
@@ -34,24 +31,23 @@ const ProfileEditPage = () => {
     }
 
     try {
-      // 예: POST /api/verify-password { password: currentPassword }
-      // 실제 API 호출로 변경해야 함
-      // 여기선 임시로 "password123" 만 통과시키는 예시
-      if (currentPassword === 'password123') {
+      const result = await verifyPassword(currentPassword);
+      if (result.success) {
         setStep('change');
         return true;
       } else {
-        setCurrentPasswordError('현재 비밀번호가 틀렸습니다.');
+        setCurrentPasswordError(result.message || '현재 비밀번호가 틀렸습니다.');
         return false;
       }
     } catch (err) {
+      console.error('로그인 실패:', err);
       setCurrentPasswordError('서버 오류가 발생했습니다.');
       return false;
     }
   };
 
-  // 새 비밀번호 변경 함수 (실제론 API 호출 필요)
-  const changePassword = async () => {
+  // ✅ 새 비밀번호 변경
+  const changePasswordHandler = async () => {
     setNewPasswordError('');
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
 
@@ -65,15 +61,19 @@ const ProfileEditPage = () => {
     }
 
     try {
-      // 예: POST /api/change-password { newPassword }
-      // 실제 API 호출로 변경해야 함
-      alert('비밀번호가 성공적으로 변경되었습니다.');
-      setNewPassword('');
-      setNewPasswordConfirm('');
-      setCurrentPassword('');
-      setStep('verify');
+      const result = await changePassword(newPassword);
+      if (result.success) {
+        alert('비밀번호가 성공적으로 변경되었습니다.');
+        setNewPassword('');
+        setNewPasswordConfirm('');
+        setCurrentPassword('');
+        setStep('verify');
+      } else {
+        setNewPasswordError(result.message || '비밀번호 변경에 실패했습니다.');
+      }
     } catch (err) {
-      setNewPasswordError('비밀번호 변경에 실패했습니다.');
+      console.error('로그인 실패:', err);
+      setNewPasswordError('서버 오류가 발생했습니다.');
     }
   };
 
@@ -129,7 +129,7 @@ const ProfileEditPage = () => {
             />
             {newPasswordError && <p className={styles.errorMessage}>{newPasswordError}</p>}
           </div>
-          <button className={styles.button} onClick={changePassword}>
+          <button className={styles.button} onClick={changePasswordHandler}>
             변경
           </button>
         </>
