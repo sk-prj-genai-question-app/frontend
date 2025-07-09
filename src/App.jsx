@@ -20,6 +20,7 @@ import MyPage from './pages/home/MyPage';
 import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import ProfileEditPage from './pages/profile/ProfileEditPage';
 
 import './index.css';
 
@@ -120,6 +121,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <WrongNotePage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile-edit"
+            element={
+              <ProtectedRoute>
+                <ProfileEditPage />
               </ProtectedRoute>
             }
           />

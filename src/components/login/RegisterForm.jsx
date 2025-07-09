@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { register } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegisterForm.module.css';
@@ -8,40 +8,52 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
   const navigate = useNavigate();
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
+
+    useEffect(() => {
+    if (submitError) {
+      const timer = setTimeout(() => {
+        setSubmitError('');
+      }, 10000);  // 10초 뒤 자동 제거
+
+      return () => clearTimeout(timer);
+    }
+  }, [submitError]);
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(!emailRegex.test(value));
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(!passwordRegex.test(value));
+    setPasswordConfirmError(value !== passwordConfirm);
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    const value = e.target.value;
+    setPasswordConfirm(value);
+    setPasswordConfirmError(password !== value);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    setEmailError('');
-    setPasswordError('');
     setSubmitError('');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
-    let valid = true;
-
-    // 이메일 검증
-    if (!emailRegex.test(email)) {
-      setEmailError('이메일 형식에 맞게 작성해주세요.');
-      valid = false;
+    if (emailError || passwordError || passwordConfirmError || !email || !password || !passwordConfirm) {
+      return;
     }
-
-    // 비밀번호 형식 검증
-    if (!passwordRegex.test(password)) {
-      setPasswordError('비밀번호는 4~20자 영문+숫자 조합이어야 합니다.');
-      valid = false;
-    } else if (password !== passwordConfirm) {
-      // 비밀번호 일치 여부 검증
-      setPasswordError('비밀번호가 일치하지 않습니다.');
-      valid = false;
-    }
-
-    if (!valid) return;
 
     try {
       const data = await register(email, password, passwordConfirm);
@@ -54,12 +66,10 @@ const RegisterForm = () => {
         if (error.response.status === 400) {
           setSubmitError('이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.');
         } else {
-          setSubmitError(error.response.data.message || '서버 오류가 발생했습니다.');
+          setSubmitError('회원가입 실패! 다시 시도해주세요.');
         }
-      } else if (error.request) {
-        setSubmitError('서버와 연결할 수 없습니다. 인터넷 상태를 확인해주세요.');
       } else {
-        setSubmitError('회원가입 실패! 다시 시도해주세요.');
+        setSubmitError('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       }
     }
   };
@@ -68,42 +78,87 @@ const RegisterForm = () => {
     navigate('/login');
   };
 
+  const isFormValid = !emailError && !passwordError && !passwordConfirmError && email && password && passwordConfirm;
+
   return (
     <form onSubmit={handleRegister} className={styles.formContainer} noValidate>
       <h2 className={styles.formTitle}>회원가입</h2>
 
       <input
-        className={`${styles.formInput} ${emailError ? styles.error : ''}`}
+        className={`${styles.formInput} ${emailError ? styles.errorBorder : ''}`}
         type="email"
-        placeholder="이메일"
+        placeholder="이메일 *"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={handleEmailChange}
         required
       />
-      {emailError && <div className={styles.errorMessage}>{emailError}</div>}
+      <div
+        className={`${styles.helperText} ${
+          email
+            ? emailError
+              ? styles.errorText
+              : styles.success
+            : ''
+        }`}
+      >
+        {email
+          ? emailError
+            ? '이메일 형식에 맞게 입력해주세요.'
+            : '이메일 조건을 만족합니다.'
+          : '이메일 형식으로 입력해 주세요.'}
+      </div>
 
       <input
-        className={`${styles.formInput} ${passwordError ? styles.error : ''}`}
+        className={`${styles.formInput} ${passwordError ? styles.errorBorder : ''}`}
         type="password"
-        placeholder="비밀번호"
+        placeholder="비밀번호 *"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
         required
       />
+      <div
+        className={`${styles.helperText} ${
+          password
+            ? passwordError
+              ? styles.errorText
+              : styles.success
+            : ''
+        }`}
+      >
+        {password
+          ? passwordError
+            ? '비밀번호는 4~20자 영문+숫자 조합으로 입력 해주세요.'
+            : '비밀번호 조건을 만족합니다.'
+          : '비밀번호는 4~20자 영문+숫자 조합으로 입력 해주세요.'}
+      </div>
 
       <input
-        className={`${styles.formInput} ${passwordError ? styles.error : ''}`}
+        className={`${styles.formInput} ${passwordConfirmError ? styles.errorBorder : ''}`}
         type="password"
-        placeholder="비밀번호 확인"
+        placeholder="비밀번호 확인 *"
         value={passwordConfirm}
-        onChange={(e) => setPasswordConfirm(e.target.value)}
+        onChange={handlePasswordConfirmChange}
         required
       />
-      {passwordError && <div className={styles.errorMessage}>{passwordError}</div>}
+      <div
+        className={`${styles.helperText} ${
+          passwordConfirm
+            ? passwordConfirmError
+              ? styles.errorText
+              : styles.success
+            : ''
+        }`}
+      >
+        {passwordConfirm
+          ? passwordConfirmError
+            ? '비밀번호가 일치하지 않습니다.'
+            : '비밀번호가 일치합니다!'
+          : '비밀번호를 한번 더 입력해 주세요.'}
+      </div>
 
       {submitError && <div className={styles.submitError}>{submitError}</div>}
 
-      <button type="submit" className={styles.formButton}>
+      <button type="submit" className={styles.formButton} disabled={!isFormValid}>
         회원가입
       </button>
 
