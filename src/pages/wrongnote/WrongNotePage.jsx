@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
-import "./WrongNotePage.css";
+import styles from "./WrongNotePage.module.css";
 
 const allSubjects = [
   "언어지식(문자・어휘・문법)・독해",
@@ -124,14 +124,17 @@ const WrongNotePage = () => {
         }
       );
       setAllData((prev) => prev.filter((item) => item.id !== recordId));
+      // TODO: window.alert 대신 커스텀 모달 사용
       window.alert("🗑️ 삭제 성공!");
     } catch (err) {
       console.error("❌ 삭제 실패:", err);
+      // TODO: window.alert 대신 커스텀 모달 사용
       window.alert("삭제 중 문제가 발생했어요!");
     }
   };
 
   const confirmAndDelete = (id) => {
+    // TODO: window.confirm 대신 커스텀 모달 사용
     if (window.confirm("정말 삭제하시겠습니까?")) handleDelete(id);
   };
 
@@ -182,8 +185,8 @@ const WrongNotePage = () => {
   };
 
   return (
-    <div className="wrongnote-wrapper">
-      <div className="filter-bar">
+    <div className={styles.wrongnoteWrapper}>
+      <div className={styles.filterBar}>
         <select value={levelFilter} onChange={handleLevelChange}>
           <option disabled>레벨</option>
           <option value="전체">전체</option>
@@ -192,7 +195,7 @@ const WrongNotePage = () => {
           <option value="N3">N3</option>
         </select>
         <Select
-          className="subject-select-container"
+          className={styles.subjectSelectContainer}
           classNamePrefix="react-select"
           isMulti
           placeholder="과목"
@@ -213,48 +216,49 @@ const WrongNotePage = () => {
         </select>
       </div>
 
-      <div className="question-scroll">
-        <div className="question-grid">
+      <div className={styles.questionScroll}>
+        <div className={styles.questionGrid}>
           {filteredData.map((item) => (
-            <div key={item.id} className="question-card">
-              <div className="card-top-bar">
-                <div className="meta-info">
+            <div key={item.id} className={styles.questionCard}>
+              <div className={styles.cardTopBar}>
+                <div className={styles.metaInfo}>
                   {item.level} | {getSubjectLabel(item.subject)}
                 </div>
               </div>
-              <div className="question-header">
+              <div className={styles.questionHeader}>
                 <img
                   src={item.correct ? "/correct.png" : "/wrong.png"}
                   alt="status"
-                  className="status-icon"
+                  className={styles.statusIcon}
                 />
-                <div className="question-text-wrapper">
-                  <div className="question-text">{item.question}</div>
-                  <div className="sub-question-text">{item.sub_question}</div>
+                <div className={styles.questionTextWrapper}>
+                  <div className={styles.questionText}>{item.question}</div>
+                  <div className={styles.subQuestionText}>{item.sub_question}</div>
                 </div>
               </div>
               {item.problm_content && (
-                <div className="passage-box">{item.problm_content}</div>
+                <div className={styles.passageBox}>{item.problm_content}</div>
               )}
-              <ul className="option-list">
+              <ul className={styles.optionList}>
                 {item.options.map((opt) => (
                   <li key={opt.number}>{`${opt.number}. ${opt.content}`}</li>
                 ))}
               </ul>
               {openExplanations[item.id] && (
-                <div className="explanation-box">
-                  <div className="explanation-title">해설</div>
+                <div className={styles.explanationBox}>
+                  <div className={styles.explanationTitle}>해설</div>
                   <div
-                    className="explanation-content"
+                    className={styles.explanationContent}
                     dangerouslySetInnerHTML={{
                       __html: item.explanation.replace(/\n/g, "<br />"),
                     }}
                   />
                 </div>
               )}
-              <div className="button-group">
+              {/* ✅ 충돌 해결 부분: 다시 풀기 기능 추가 및 CSS 모듈 적용 */}
+              <div className={styles.buttonGroup}> {/* dev/1.3.1의 CSS 모듈 적용 */}
                 <button
-                  onClick={() => navigate(`/retry-problem/${item.questionId}`)}
+                  onClick={() => navigate(`/retry-problem/${item.questionId}`)} // feat/50-wrongnote-retake의 다시 풀기 기능 적용
                 >
                   다시 풀기
                 </button>
@@ -263,7 +267,7 @@ const WrongNotePage = () => {
                   {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                 </button>
                 <button
-                  className="delete"
+                  className={styles.delete} // dev/1.3.1의 CSS 모듈 적용
                   onClick={() => confirmAndDelete(item.id)}
                 >
                   삭제
@@ -274,7 +278,7 @@ const WrongNotePage = () => {
         </div>
       </div>
 
-      <div className="fixed-bottom-button">
+      <div className={styles.fixedBottomButton}>
         <button>전체 다시 풀기</button>
       </div>
     </div>

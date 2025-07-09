@@ -101,10 +101,8 @@ const SolveProblemPage = () => {
         state: {
           total: numProblems,
           correct: correctCount,
-          problems: problemHistory,
-          initialLevel,
-          initialProblemType,
         },
+        replace: true,
       });
     }
   };

@@ -1,103 +1,102 @@
-.wrongnote-wrapper {
+.wrongnoteWrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
   font-family: 'Pretendard', sans-serif;
   position: relative;
-  width:1190px;
+  width: 1190px;
+  width: 100%; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 16px; 
 }
 
-.filter-bar {
+.filterBar {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  padding: 0px 0px 12px;
+  padding: 0 0 12px;
   position: sticky;
   top: 0;
   background: #f9f9f9;
-
 }
 
-.filter-bar select {
+.filterBar select {
   padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 14px;
 }
 
-.question-scroll {
+.questionScroll {
   flex: 1;
   overflow-y: auto;
   padding: 0 10px;
 }
 
-.question-grid {
+.questionGrid {
   display: grid;
-  /* grid-template-columns: 1fr; */
   gap: 24px;
 }
 
-.question-card {
+.questionCard {
   background: white;
   border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   padding: 20px;
-
-  display: flex;                
-  flex-direction: column;       
-  min-height: 220px;     
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
   justify-content: flex-start;
 }
 
-
-.question-header {
+.questionHeader {
   display: flex;
   align-items: center;
   margin-top: 10px;
   margin-left: -5px;
 }
 
-.question-title-row {
+.questionTitleRow {
   display: flex;
   align-items: center;
   margin-bottom: 4px;
 }
 
-.card-top-bar {
+.cardTopBar {
   display: flex;
-  /* justify-content: flex-end; */
   margin-bottom: 8px;
 }
 
-.meta-info {
+.metaInfo {
   font-size: 13px;
   color: #aaa;
 }
 
-.status-icon {
+.statusIcon {
   width: 24px;
   height: 24px;
   margin-right: 10px;
 }
 
-.question-text-wrapper {
+.questionTextWrapper {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.question-text {
+.questionText {
   font-weight: 600;
   font-size: 16px;
 }
 
-.sub-question-text {
+.subQuestionText {
   font-size: 14px;
   color: #555;
-  margin-left: 4px; /* 약간 들여쓰기 */
+  margin-left: 4px;
 }
 
-.passage-box {
+.passageBox {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   padding: 12px;
@@ -110,19 +109,19 @@
   color: #333;
 }
 
-.question-card ul {
+.questionCard ul {
   padding-left: 0;
-  margin-bottom: 0;  /* ✅ 원래 있던 margin-bottom 제거 */
+  margin-bottom: 0;
 }
 
-.button-group {
+.buttonGroup {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 16px;  /* ✅ 버튼 위에 간격 확보 */
+  margin-top: 16px;
 }
 
-.button-group button {
+.buttonGroup button {
   padding: 6px 12px;
   border-radius: 6px;
   border: none;
@@ -132,20 +131,20 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
-.button-group button:hover {
+.buttonGroup button:hover {
   background-color: #e0e0e0;
   transform: translateY(-1px);
 }
 
-.fixed-bottom-button {
-  width: 100%;              
+.fixedBottomButton {
+  width: 100%;
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   margin-top: 20px;
-  box-sizing: border-box;   
+  box-sizing: border-box;
 }
 
-.fixed-bottom-button button {
+.fixedBottomButton button {
   background-color: #444;
   color: white;
   border: none;
@@ -154,31 +153,31 @@
   cursor: pointer;
 }
 
-.option-list {
-  list-style: none;      
+.optionList {
+  list-style: none;
   margin-left: 30px;
   margin-bottom: 16px;
 }
 
-.option-list li {
-  margin-bottom: 10px; 
+.optionList li {
+  margin-bottom: 10px;
   font-size: 15px;
   color: #1e2b3a;
 }
 
-.subject-select-container {
+.subjectSelectContainer {
   display: inline-block;
-  min-width: 200px;     
-  width: auto;            
-}  
+  min-width: 200px;
+  width: auto;
+}
 
-.menu-icon {
+.menuIcon {
   width: 18px;
   height: 18px;
   object-fit: contain;
 }
 
-.explanation-box {
+.explanationBox {
   background-color: #f9f9f9;
   border-left: 4px solid #4a90e2;
   padding: 12px 16px;
@@ -188,12 +187,12 @@
   line-height: 1.6;
 }
 
-.explanation-title {
+.explanationTitle {
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 4px;
 }
 
-.explanation-content {
+.explanationContent {
   white-space: pre-wrap;
 }
