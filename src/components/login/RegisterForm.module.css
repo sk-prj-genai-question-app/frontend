@@ -1,3 +1,4 @@
+/* === 회원가입 폼 전체 스타일 === */
 .formContainer {
   width: 320px;
   margin: 50px auto;
@@ -15,6 +16,7 @@
   color: #333;
 }
 
+/* === 입력창 스타일 === */
 .formInput {
   width: 100%;
   padding: 12px;
@@ -23,11 +25,39 @@
   margin-bottom: 15px;
   font-size: 1rem;
   box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
+/* 입력창 에러 상태 */
 .formInput.error {
   border-color: #ff6868;
-  background-color: #fff0f0;
+  background-color: #ffffff;
+}
+
+/* 에러 테두리 (class 적용용) */
+.errorBorder {
+  border-color: #e53935;
+}
+
+/* 포커스 시 스타일 (파란색) */
+.formInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+/* 에러 시 포커스도 빨간색 유지 */
+.formInput.errorBorder:focus {
+  border-color: #ff6868 !important;
+  background-color: #ffffff;
+}
+
+/* === Helper Text / Error Message === */
+.helperText {
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+  color: #999;
 }
 
 .errorMessage {
@@ -39,17 +69,28 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Helper Text 전용 색상 클래스 */
+.errorText {
+  color: #e53935;
+}
+
+.success {
+  color: #4caf50;
+}
+
+/* === 서버 응답 에러 === */
 .submitError {
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
   font-weight: 700;
-  background-color: #fdecea;
+  background-color: #fffefe;
   padding: 10px 15px;
   border-radius: 6px;
   border: 1px solid #f44336;
 }
 
+/* === 버튼 스타일 === */
 .formButton {
   width: 100%;
   padding: 12px;
@@ -65,4 +106,9 @@
 
 .formButton:hover {
   background-color: #284cae;
+}
+
+.formButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
