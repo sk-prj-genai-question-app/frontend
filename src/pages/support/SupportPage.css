@@ -1,0 +1,31 @@
+.support-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Pretendard', sans-serif;
+  line-height: 1.6;
+}
+
+.support-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.support-page section {
+  margin-bottom: 2rem;
+}
+
+.support-page ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.support-page a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.support-page a:hover {
+  text-decoration: underline;
+}
