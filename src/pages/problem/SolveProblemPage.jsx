@@ -47,14 +47,23 @@ const SolveProblemPage = () => {
       setCorrectCount((prev) => prev + 1);
     }
 
-    // ✅ 백엔드에 정답 기록 저장
     try {
-      const userId = 1; // ⚠️ 추후 로그인 시스템 연동 필요
-      await axios.post('http://localhost:8080/api/answer-record', {
-        user_id: userId,
-        problem_id: currentProblem.id,
-        user_answer: selectedChoice,
-      });
+      const userId = 1; // ⚠️ 실제 앱에서는 백엔드에서 추출되도록 구현
+      const token = localStorage.getItem('accessToken');
+
+      await axios.post(
+        'http://localhost:8080/api/answer-record',
+        {
+          user_id: userId,
+          problem_id: currentProblem.id,
+          user_answer: selectedChoice,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       console.error('문제 풀이 기록 저장 실패', error);
     }
@@ -88,7 +97,6 @@ const SolveProblemPage = () => {
         setIsLoadingNewProblem(false);
       }
     } else {
-      // 모든 문제 풀이 완료 → 결과 페이지로 이동
       navigate('/result', {
         state: {
           total: numProblems,
