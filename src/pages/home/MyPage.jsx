@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import ProfileCard from "../../components/home/ProfileCard";
-import ExamInfoCard from "../../components/home/ExamInfoCard";
-import ProgressCard from "../../components/home/ProgressCard";
-import "./MyPage.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import ProfileCard from '../../components/home/ProfileCard';
+import ExamInfoCard from '../../components/home/ExamInfoCard';
+import ProgressCard from '../../components/home/ProgressCard';
+import './MyPage.css';
 
 const MyPage = () => {
   const user = {
-    name: "User",
-    email: "user@example.com",
-    avatar: "/user.png",
+    name: 'User',
+    email: 'user@example.com',
+    avatar: '/user.png',
   };
 
   const [analysisData, setAnalysisData] = useState([]);
 
   const allCombinations = [
-    { level: "N1", problemType: "V" },
-    { level: "N1", problemType: "G" },
-    { level: "N1", problemType: "R" },
-    { level: "N2", problemType: "V" },
-    { level: "N2", problemType: "G" },
-    { level: "N2", problemType: "R" },
+    { level: 'N1', problemType: 'V' },
+    { level: 'N1', problemType: 'G' },
+    { level: 'N1', problemType: 'R' },
+    { level: 'N2', problemType: 'V' },
+    { level: 'N2', problemType: 'G' },
+    { level: 'N2', problemType: 'R' },
+    { level: 'N3', problemType: 'V' },
+    { level: 'N3', problemType: 'G' },
+    { level: 'N3', problemType: 'R' },
   ];
 
   useEffect(() => {
     const fetchAnalysis = async () => {
-      const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem('accessToken');
       try {
-        const res = await axios.get(
-          "http://localhost:8080/api/answer-record/my-analysis",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await axios.get('http://localhost:8080/api/answer-record/my-analysis', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         const rawData = res.data?.data;
         const receivedMap = new Map();
@@ -64,7 +64,7 @@ const MyPage = () => {
 
         setAnalysisData(completeData);
       } catch (err) {
-        console.error("❌ 오답률 데이터 가져오기 실패:", err);
+        console.error('❌ 오답률 데이터 가져오기 실패:', err);
       }
     };
 
@@ -73,12 +73,12 @@ const MyPage = () => {
 
   const getSubjectName = (code) => {
     switch (code) {
-      case "V":
-        return "어휘";
-      case "G":
-        return "문법";
-      case "R":
-        return "독해";
+      case 'V':
+        return '어휘';
+      case 'G':
+        return '문법';
+      case 'R':
+        return '독해';
       default:
         return code;
     }
