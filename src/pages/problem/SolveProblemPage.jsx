@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './SolveProblemPage.css';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./SolveProblemPage.css";
 
 const SolveProblemPage = () => {
   const location = useLocation();
@@ -30,8 +30,8 @@ const SolveProblemPage = () => {
 
   useEffect(() => {
     if (!currentProblem) {
-      console.error('No initial problem data received.');
-      navigate('/');
+      console.error("No initial problem data received.");
+      navigate("/");
     }
   }, [currentProblem, navigate]);
 
@@ -50,13 +50,22 @@ const SolveProblemPage = () => {
     // ✅ 백엔드에 정답 기록 저장
     try {
       const userId = 1; // ⚠️ 추후 로그인 시스템 연동 필요
-      await axios.post('http://localhost:8080/api/answer-record', {
-        user_id: userId,
-        problem_id: currentProblem.id,
-        user_answer: selectedChoice,
-      });
+      const token = localStorage.getItem("accessToken");
+      await axios.post(
+        "http://localhost:8080/api/answer-record",
+        {
+          user_id: userId,
+          problem_id: currentProblem.id,
+          user_answer: selectedChoice,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
-      console.error('문제 풀이 기록 저장 실패', error);
+      console.error("문제 풀이 기록 저장 실패", error);
     }
   };
 
@@ -69,10 +78,13 @@ const SolveProblemPage = () => {
         if (currentProblemIndex < problemHistory.length) {
           nextProblem = problemHistory[currentProblemIndex];
         } else {
-          const response = await axios.post('http://127.0.0.1:8000/problems/generate', {
-            level: initialLevel,
-            problem_type: initialProblemType,
-          });
+          const response = await axios.post(
+            "http://127.0.0.1:8000/problems/generate",
+            {
+              level: initialLevel,
+              problem_type: initialProblemType,
+            }
+          );
           nextProblem = response.data.data;
           setProblemHistory((prev) => [...prev, nextProblem]);
         }
@@ -82,14 +94,14 @@ const SolveProblemPage = () => {
         setSelectedChoice(null);
         setShowAnswer(false);
       } catch (error) {
-        console.error('Error generating next problem:', error);
-        alert('다음 문제 생성에 실패했습니다.');
+        console.error("Error generating next problem:", error);
+        alert("다음 문제 생성에 실패했습니다.");
       } finally {
         setIsLoadingNewProblem(false);
       }
     } else {
       // 모든 문제 풀이 완료 → 결과 페이지로 이동
-      navigate('/result', {
+      navigate("/result", {
         state: {
           total: numProblems,
           correct: correctCount,
@@ -112,11 +124,14 @@ const SolveProblemPage = () => {
   };
 
   const getChoiceClass = (choiceNumber) => {
-    if (!showAnswer) return selectedChoice === choiceNumber ? 'selected' : '';
-    if (choiceNumber === currentProblem.answerNumber) return 'correct';
-    if (selectedChoice === choiceNumber && selectedChoice !== currentProblem.answerNumber)
-      return 'incorrect';
-    return '';
+    if (!showAnswer) return selectedChoice === choiceNumber ? "selected" : "";
+    if (choiceNumber === currentProblem.answerNumber) return "correct";
+    if (
+      selectedChoice === choiceNumber &&
+      selectedChoice !== currentProblem.answerNumber
+    )
+      return "incorrect";
+    return "";
   };
 
   return (
@@ -128,15 +143,19 @@ const SolveProblemPage = () => {
       <div className="problem-container">
         <p className="problem-level-type">
           [{currentProblem.level}]
-          {currentProblem.problemType === 'V'
-            ? '어휘'
-            : currentProblem.problemType === 'G'
-            ? '문법'
-            : '독해'}
+          {currentProblem.problemType === "V"
+            ? "어휘"
+            : currentProblem.problemType === "G"
+            ? "문법"
+            : "독해"}
         </p>
-        <h3 className="problem-title-parent">{currentProblem.problemTitleParent}</h3>
+        <h3 className="problem-title-parent">
+          {currentProblem.problemTitleParent}
+        </h3>
         {currentProblem.problemTitleChild && (
-          <p className="problem-title-child">{currentProblem.problemTitleChild}</p>
+          <p className="problem-title-child">
+            {currentProblem.problemTitleChild}
+          </p>
         )}
         {currentProblem.problemContent && (
           <div className="problem-content">
@@ -152,7 +171,8 @@ const SolveProblemPage = () => {
                 className={`choice-item ${getChoiceClass(choice.number)}`}
                 onClick={() => !showAnswer && handleChoiceClick(choice.number)}
               >
-                <span className="choice-number">{choice.number}.</span> {choice.content}
+                <span className="choice-number">{choice.number}.</span>{" "}
+                {choice.content}
               </div>
             ))}
         </div>
@@ -185,10 +205,10 @@ const SolveProblemPage = () => {
                 disabled={isLoadingNewProblem}
               >
                 {isLoadingNewProblem
-                  ? '생성 중...'
+                  ? "생성 중..."
                   : currentProblemIndex < numProblems
-                  ? '다음 문제'
-                  : '문제 풀기 종료'}
+                  ? "다음 문제"
+                  : "문제 풀기 종료"}
               </button>
             </div>
           </div>

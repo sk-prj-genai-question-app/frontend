@@ -3,54 +3,6 @@ import axios from "axios";
 import Select from "react-select";
 import "./WrongNotePage.css";
 
-const mockData = [
-  {
-    id: 1,
-    correct: false,
-    question: "다음 중 '고장나다'의 일본어 표현으로 옳은 것은?",
-    options: ["壊す", "壊れる", "消す", "直す"],
-    level: "N2",
-    subject: "언어지식(문자・어휘・문법)・독해",
-  },
-  {
-    id: 2,
-    correct: true,
-    question: "다음 문장에서 올바른 조사를 고르세요: 彼___映画を見ました。",
-    options: ["が", "を", "に", "と"],
-    level: "N1",
-    subject: "언어지식(문자・어휘・문법)・독해",
-  },
-  {
-    id: 3,
-    correct: true,
-    question: "다음 중 '불안정한'과 가장 가까운 뜻을 가진 단어는?",
-    options: ["安定", "不安定", "安全", "危険"],
-    level: "N1",
-    subject: "언어지식(문자・어휘・문법)・독해",
-  },
-  {
-    id: 4,
-    correct: true,
-    question: "질문: 男の人は何をしたいと言っていますか？",
-    options: [
-      "공원에 가고 싶다",
-      "커피를 마시고 싶다",
-      "친구를 만나고 싶다",
-      "영화를 보고 싶다",
-    ],
-    level: "N3",
-    subject: "청언어지식(문법)・독해",
-  },
-  {
-    id: 5,
-    correct: false,
-    question: "질문: 女の人はいつ来ると言っていますか？",
-    options: ["3시", "4시", "5시", "6시"],
-    level: "N3",
-    subject: "언어지식(문자・어휘)",
-  },
-];
-
 const allSubjects = [
   "언어지식(문자・어휘・문법)・독해",
   "언어지식(문자・어휘)",
@@ -70,6 +22,7 @@ const WrongNotePage = ({ userId }) => {
   const [levelFilter, setLevelFilter] = useState("전체");
   const [subjectFilter, setSubjectFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState("전체");
+  const [openExplanations, setOpenExplanations] = useState({});
 
   // 📡 API 요청
   useEffect(() => {
@@ -85,7 +38,7 @@ const WrongNotePage = ({ userId }) => {
         const payload = JSON.parse(atob(token.split(".")[1])); // 중간 부분 디코딩
         const userId = payload.id;
 
-        const res = await axios.get(
+        const answerRes = await axios.get(
           `http://localhost:8080/api/answer-record/user/${userId}`,
           {
             headers: {
@@ -94,7 +47,7 @@ const WrongNotePage = ({ userId }) => {
           }
         );
 
-        const rawData = res?.data?.data;
+        const rawData = answerRes?.data?.data;
         // console.log("✅ 응답 전체:", res);
         // console.log("✅ 응답 데이터:", res.data);
 
@@ -108,19 +61,48 @@ const WrongNotePage = ({ userId }) => {
           return;
         }
 
-        const formatted = rawData.map((item) => ({
-          id: item.recordId,
-          correct: item.isCorrect,
-          level: item.level,
-          subject: `${item.problemTitleParent}・${item.problemTitleChild}`,
-          question: item.problemContent,
-          userAnswer: item.userAnswer,
-          answerNumber: item.answerNumber,
-          explanation: item.explanation,
-          options: item.choices?.map((c) => c.content) || [],
-        }));
+        const detailedData = await Promise.all(
+          rawData.map(async (item) => {
+            try {
+              const probRes = await axios.get(
+                `http://localhost:8080/api/problems/${item.questionId}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
 
-        setAllData(formatted);
+              const problem = probRes.data.data;
+              console.log("지문: ", problem.problemContent);
+
+              return {
+                id: item.recordId,
+                correct: item.isCorrect,
+                level: item.level,
+                subject: item.problemType,
+                question: `${item.problemTitleParent}`,
+                sub_question: `${item.problemTitleChild}`,
+                problm_content: item.problemContent,
+                userAnswer: item.userAnswer,
+                answerNumber: item.answerNumber,
+                explanation: item.explanation,
+                options: Array.isArray(problem.choices)
+                  ? problem.choices.map((c) => ({
+                      number: c.number,
+                      content: c.content,
+                    }))
+                  : [],
+              };
+            } catch (err) {
+              console.error("❌ 문제 상세 조회 실패:", err);
+              return null;
+            }
+          })
+        );
+
+        const filtered = detailedData.filter((d) => d !== null);
+        setAllData(filtered);
       } catch (err) {
         console.error("❌ 오답노트 데이터 불러오기 실패:", err);
       }
@@ -158,6 +140,26 @@ const WrongNotePage = ({ userId }) => {
     label: subj,
     value: subj,
   }));
+
+  const getSubjectLabel = (subjectCode) => {
+    switch (subjectCode) {
+      case "V":
+        return "어휘";
+      case "G":
+        return "문법";
+      case "R":
+        return "독해";
+      default:
+        return subjectCode;
+    }
+  };
+
+  const toggleExplanation = (id) => {
+    setOpenExplanations((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <>
@@ -202,28 +204,35 @@ const WrongNotePage = ({ userId }) => {
               <div key={item.id} className="question-card">
                 <div className="card-top-bar">
                   <div className="meta-info">
-                    {item.level} | {item.subject}
+                    {item.level} | {getSubjectLabel(item.subject)}
                   </div>
                 </div>
-
                 <div className="question-header">
                   <img
                     src={item.correct ? "/correct.png" : "/wrong.png"}
                     alt="status"
                     className="status-icon"
                   />
-                  <span className="question-text">{item.question}</span>
+                  <div className="question-text-wrapper">
+                    <div className="question-text">{item.question}</div>
+                    <div className="sub-question-text">{item.sub_question}</div>
+                  </div>
                 </div>
+                {item.problm_content && (
+                  <div className="passage-box">{item.problm_content}</div>
+                )}{" "}
                 <ul className="option-list">
-                  {item.options.map((opt, idx) => (
-                    <li key={idx}>{`${idx + 1}. ${opt}`}</li>
+                  {item.options.map((opt) => (
+                    <li key={opt.number}>{`${opt.number}. ${opt.content}`}</li>
                   ))}
                 </ul>
-
+                {openExplanations[item.id] && (
+                  <div className="explanation-box">📘 {item.explanation}</div>
+                )}
                 <div className="button-group">
                   <button>다시 풀기</button>
-                  <button onClick={() => alert(`📘 해설: ${item.explanation}`)}>
-                    해설 보기
+                  <button onClick={() => toggleExplanation(item.id)}>
+                    {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                   </button>
                   <button className="delete">삭제</button>
                 </div>
