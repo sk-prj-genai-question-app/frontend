@@ -13,7 +13,7 @@ import GenerateProblemPage from './pages/problem/GenerateProblemPage';
 import SolveProblemPage from './pages/problem/SolveProblemPage';
 import ResultPage from './pages/problem/ResultPage';
 import CustomPage from './pages/CustomPage';
-import SupportPage from './pages/SupportPage';
+import SupportPage from './pages/support/SupportPage';
 import SettingsPage from './pages/SettingsPage';
 import WrongNotePage from './pages/wrongnote/WrongNotePage';
 import MyPage from './pages/home/MyPage';
