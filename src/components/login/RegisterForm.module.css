@@ -83,11 +83,14 @@
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
-  font-weight: 700;
-  background-color: #fffefe;
-  padding: 10px 15px;
+  font-weight: 500;
+  background-color: #fdecea;
+  padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #f44336;
+  font-size: 13px;
+  line-height: 1.4;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 /* === 버튼 스타일 === */

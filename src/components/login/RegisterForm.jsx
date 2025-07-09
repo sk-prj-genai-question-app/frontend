@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { register } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegisterForm.module.css';
@@ -17,6 +17,16 @@ const RegisterForm = () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,20}$/;
+
+    useEffect(() => {
+    if (submitError) {
+      const timer = setTimeout(() => {
+        setSubmitError('');
+      }, 10000);  // 10초 뒤 자동 제거
+
+      return () => clearTimeout(timer);
+    }
+  }, [submitError]);
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -52,10 +62,14 @@ const RegisterForm = () => {
       navigate('/login');
     } catch (error) {
       console.error('회원가입 실패:', error);
-      if (error.response && error.response.status === 400) {
-        setSubmitError('이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.');
+      if (error.response) {
+        if (error.response.status === 400) {
+          setSubmitError('이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.');
+        } else {
+          setSubmitError('회원가입 실패! 다시 시도해주세요.');
+        }
       } else {
-        setSubmitError('회원가입 실패! 다시 시도해주세요.');
+        setSubmitError('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       }
     }
   };
