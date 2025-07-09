@@ -30,12 +30,33 @@
   flex: 1;
 }
 
+.overall-wrongrate-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 24px;
+  /* margin: 40px 20px 0; */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-title-area {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.card-title-area h2 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
 .progress-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0px, 200px));
-  gap: 40px; 
+  grid-template-columns: repeat(auto-fit, minmax(0px, 150px));
+  gap: 43px; 
   /* max-width: 1200px; */
-  margin: 0 10px 40px auto;
+  /* margin: 0 10px 40px auto; */
 }
 
 .main-grid, .progress-grid {
