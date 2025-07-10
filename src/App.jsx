@@ -8,18 +8,19 @@ import {
 import Sidebar from './components/bar/Sidebar';
 import TopBar from './components/bar/TopBar';
 
-import ReviewPage from './pages/ReviewPage';
 import GenerateProblemPage from './pages/problem/GenerateProblemPage';
 import SolveProblemPage from './pages/problem/SolveProblemPage';
 import ResultPage from './pages/problem/ResultPage';
-import CustomPage from './pages/CustomPage';
-import SupportPage from './pages/SupportPage';
-import SettingsPage from './pages/SettingsPage';
+import CustomPage from './pages/custom/CustomPage';
+import SupportPage from './pages/support/SupportPage';
 import WrongNotePage from './pages/wrongnote/WrongNotePage';
 import MyPage from './pages/home/MyPage';
 import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import ProfileEditPage from './pages/profile/ProfileEditPage';
+import RetryProblemPage from './pages/problem/RetryProblemPage';
+import RetryAllPage from './pages/wrongnote/RetryAllPage';
 
 import './index.css';
 
@@ -55,14 +56,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <MyPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/review"
-            element={
-              <ProtectedRoute>
-                <ReviewPage />
               </ProtectedRoute>
             }
           />
@@ -108,18 +101,37 @@ function App() {
             }
           />
           <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/wrong-note"
             element={
               <ProtectedRoute>
                 <WrongNotePage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route 
+            path="/retry-all" 
+            element={
+              <ProtectedRoute>
+                <RetryAllPage />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route
+            path="/profile-edit"
+            element={
+              <ProtectedRoute>
+                <ProfileEditPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/retry-problem/:id"
+            element={
+              <ProtectedRoute>
+                <RetryProblemPage />
               </ProtectedRoute>
             }
           />

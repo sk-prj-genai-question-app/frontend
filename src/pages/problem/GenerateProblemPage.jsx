@@ -69,6 +69,7 @@ const GenerateProblemPage = () => {
           <option value="">레벨 선택</option>
           <option value="N1">N1</option>
           <option value="N2">N2</option>
+          <option value="N3">N3</option>
         </select>
 
         <select value={problemType} onChange={(e) => setProblemType(e.target.value)}>

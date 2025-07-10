@@ -1,0 +1,96 @@
+.sidebar {
+  height: 100vh;
+  background-color: #1e3a8a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebarOpen {
+  width: 250px;
+}
+
+.sidebarClosed {
+  width: 35px;
+}
+
+.sidebar h2 {
+  margin: 30px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.sidebar button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 14px;            /* 크기 증가 */
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;          /* 글자 크기 증가 */
+  border-radius: 6px;       /* 둥근 정도 증가 */
+  transition: background-color 0.2s ease, opacity 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar button:hover {
+  background-color: #3749ab;
+}
+
+.sidebarClosed button:not(.toggleButton) {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.sidebarBottom {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggleButton {
+  position: absolute;
+  top: 25px;
+  right: 10px;
+  background-color: #3749ab;
+  color: white;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  display: inline-block;
+}
+
+.toggleButton:focus,
+.toggleButton:active {
+  border-color: #fff;
+  outline: none;
+}
+
+.sidebarClosed h2 {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
