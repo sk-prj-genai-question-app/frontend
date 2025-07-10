@@ -14,7 +14,7 @@ const RetryProblemPage = () => {
   useEffect(() => {
     const fetchProblem = async () => {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.get(`http://localhost:8080/api/problems/${id}`, {
+      const res = await axios.get(`/api/problems/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProblem(res.data.data);
@@ -29,7 +29,7 @@ const RetryProblemPage = () => {
 
     const token = localStorage.getItem("accessToken");
     await axios.post(
-      "http://localhost:8080/api/answer-record",
+      "/api/answer-record",
       {
         problem_id: problem.id,
         user_answer: selected,

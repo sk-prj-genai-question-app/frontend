@@ -1,7 +1,7 @@
 // src/api/authApi.jsx
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080'; // 여기에 백엔드 주소 맞게 넣기
+const API_BASE_URL = '/api'; // Nginx 프록시 설정에 따라 변경
 
 // 로그인
 export const login = async (email, password) => {

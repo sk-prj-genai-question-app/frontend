@@ -20,7 +20,7 @@ const CustomPage = () => {
     setShowAnswer(false);
 
     try {
-      const response = await axios.post("http://localhost:8000/chatbot", {
+      const response = await axios.post("/ai/chatbot", {
         userId: "demo_user",
         question,
       });

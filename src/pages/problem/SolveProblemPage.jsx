@@ -52,7 +52,7 @@ const SolveProblemPage = () => {
       const token = localStorage.getItem('accessToken');
 
       await axios.post(
-        'http://localhost:8080/api/answer-record',
+        '/api/answer-record',
         {
           user_id: userId,
           problem_id: currentProblem.id,

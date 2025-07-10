@@ -37,7 +37,7 @@ const WrongNotePage = () => {
         }
 
         const res = await axios.get(
-          "http://localhost:8080/api/answer-record/my-records?isCorrect=false",
+          ""/api/answer-record/my-records?isCorrect=false"",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -72,7 +72,7 @@ const WrongNotePage = () => {
           uniqueRecords.map(async (item) => {
             try {
               const probRes = await axios.get(
-                `http://localhost:8080/api/problems/${item.questionId}`,
+                `/api/problems/${item.questionId}`,
                 {
                   headers: { Authorization: `Bearer ${token}` },
                 }
@@ -117,7 +117,7 @@ const WrongNotePage = () => {
     const token = localStorage.getItem("accessToken");
     try {
       await axios.delete(
-        `http://localhost:8080/api/answer-record/${recordId}`,
+        `/api/answer-record/${recordId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

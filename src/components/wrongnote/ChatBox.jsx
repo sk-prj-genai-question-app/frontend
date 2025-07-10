@@ -26,7 +26,7 @@ const WrongNoteChatBox = ({ problemId }) => {
     try {
       const payload = { content: inputContent };
       const res = await axios.post(
-        `http://localhost:8080/api/problems/${problemId}/chat`,
+        `/api/problems/${problemId}/chat`,
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -30,7 +30,7 @@ const MyPage = () => {
     const fetchAnalysis = async () => {
       const token = localStorage.getItem('accessToken');
       try {
-        const res = await axios.get('http://localhost:8080/api/answer-record/my-analysis', {
+        const res = await axios.get('/api/answer-record/my-analysis', {
           headers: { Authorization: `Bearer ${token}` },
         });
 

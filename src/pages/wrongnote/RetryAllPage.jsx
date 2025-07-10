@@ -59,7 +59,7 @@ const RetryAllPage = () => {
           await Promise.all(
             problems.map((p) =>
               axios.post(
-                "http://localhost:8080/api/answer-record",
+                "/api/answer-record",
                 {
                   problem_id: p.questionId,
                   user_answer: results[p.questionId] ? p.answerNumber : -1,
