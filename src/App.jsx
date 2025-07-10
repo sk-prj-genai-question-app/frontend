@@ -22,6 +22,7 @@ import RegisterPage from './pages/login/RegisterPage';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import ProfileEditPage from './pages/profile/ProfileEditPage';
 import RetryProblemPage from './pages/problem/RetryProblemPage';
+import RetryAllPage from './pages/wrongnote/RetryAllPage';
 
 import './index.css';
 
@@ -124,6 +125,15 @@ function App() {
                 <WrongNotePage />
               </ProtectedRoute>
             }
+          />
+
+          <Route 
+            path="/retry-all" 
+            element={
+              <ProtectedRoute>
+                <RetryAllPage />
+              </ProtectedRoute>
+            } 
           />
 
           <Route

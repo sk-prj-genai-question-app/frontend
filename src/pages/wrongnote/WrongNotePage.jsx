@@ -279,7 +279,9 @@ const WrongNotePage = () => {
       </div>
 
       <div className={styles.fixedBottomButton}>
-        <button>전체 다시 풀기</button>
+        <button onClick={() => navigate("/retry-all", { state: { problems: filteredData } })}>
+          전체 다시 풀기
+        </button>
       </div>
     </div>
   );
