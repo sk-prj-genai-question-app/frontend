@@ -8,13 +8,11 @@ import {
 import Sidebar from './components/bar/Sidebar';
 import TopBar from './components/bar/TopBar';
 
-import ReviewPage from './pages/ReviewPage';
 import GenerateProblemPage from './pages/problem/GenerateProblemPage';
 import SolveProblemPage from './pages/problem/SolveProblemPage';
 import ResultPage from './pages/problem/ResultPage';
-import CustomPage from './pages/CustomPage';
+import CustomPage from './pages/custom/CustomPage';
 import SupportPage from './pages/support/SupportPage';
-import SettingsPage from './pages/SettingsPage';
 import WrongNotePage from './pages/wrongnote/WrongNotePage';
 import MyPage from './pages/home/MyPage';
 import LoginPage from './pages/login/LoginPage';
@@ -62,14 +60,6 @@ function App() {
             }
           />
           <Route
-            path="/review"
-            element={
-              <ProtectedRoute>
-                <ReviewPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/generate-problem"
             element={
               <ProtectedRoute>
@@ -107,14 +97,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <SupportPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
               </ProtectedRoute>
             }
           />

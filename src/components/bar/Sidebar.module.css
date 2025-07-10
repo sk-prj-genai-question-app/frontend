@@ -25,18 +25,19 @@
   overflow: hidden;
   transition: opacity 0.3s ease;
   color: #ffffff;
+  font-size: 22px;
 }
 
 .sidebar button {
   background: none;
   border: none;
   color: white;
-  padding: 10px;
+  padding: 14px;            /* 크기 증가 */
   text-align: left;
   cursor: pointer;
   width: 100%;
-  font-size: 16px;
-  border-radius: 4px;
+  font-size: 18px;          /* 글자 크기 증가 */
+  border-radius: 6px;       /* 둥근 정도 증가 */
   transition: background-color 0.2s ease, opacity 0.3s ease;
   white-space: nowrap;
   overflow: hidden;
@@ -48,7 +49,11 @@
 
 .sidebarClosed button:not(.toggleButton) {
   opacity: 0;
-  pointer-events: none; /* 메뉴 버튼 비활성화 */
+  pointer-events: none;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 .sidebarBottom {
@@ -57,7 +62,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* 토글 버튼 - 고정 크기 */
 .toggleButton {
   position: absolute;
   top: 25px;
@@ -70,36 +74,19 @@
   cursor: pointer;
   font-size: 14px;
   z-index: 10;
-  width: 40px;       /* 정사각형 너비 */
-  height: 40px;      /* 정사각형 높이 */
-
-  min-width: 40px;      /* 최소 너비 지정 */
-  max-width: 40px;      /* 최대 너비 지정, 필요하면 조절 */
-  display: inline-block; /* 인라인 블록으로 최소 너비 유지 */
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  display: inline-block;
 }
 
 .toggleButton:focus,
 .toggleButton:active {
-  border-color: #fff; /* 원하는 테두리 색상 */
-  outline: none;       /* 기본 아웃라인 제거 */
+  border-color: #fff;
+  outline: none;
 }
 
-/* 버튼 공통 스타일 */
-.sidebar button {
-  width: 100%;
-}
-
-/* 사이드바 좁아졌을 때 버튼 숨김 */
-.sidebarClosed button:not(.toggleButton) {
-  opacity: 0;
-  pointer-events: none;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-}
-
-/* h2 로고도 숨김 */
 .sidebarClosed h2 {
   opacity: 0;
   height: 0;
