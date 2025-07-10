@@ -30,13 +30,12 @@ const Sidebar = () => {
         <button>문제 풀기</button>
       </Link>
       <Link to="/custom">
-        <button>사용자 맞춤 문제</button>
+        <button>챗봇</button>
       </Link>
       <div className={styles.sidebarBottom}>
         <Link to="/support">
           <button>Support</button>
         </Link>
-          <button>Settings</button>
       </div>
     </div>
   );
