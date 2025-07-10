@@ -7,17 +7,13 @@ import styles from "./WrongNotePage.module.css";
 import WrongNoteChatBox from "../../components/wrongnote/ChatBox";
 import WrongNoteChatModal from "../../components/wrongnote/ChatModal";
 
-const allSubjects = [
-  "언어지식(문자・어휘・문법)・독해",
-  "언어지식(문자・어휘)",
-  "언어지식(문법)・독해",
-];
+const allSubjects = ["어휘", "문법", "독해"];
 
 const subjectOptionsByLevel = {
   전체: allSubjects,
-  N1: ["언어지식(문자・어휘・문법)・독해"],
-  N2: ["언어지식(문자・어휘・문법)・독해"],
-  N3: ["언어지식(문자・어휘)", "언어지식(문법)・독해"],
+  N1: ["어휘", "문법", "독해"],
+  N2: ["어휘", "문법", "독해"],
+  N3: ["어휘", "문법", "독해"],
 };
 
 const WrongNotePage = () => {
@@ -145,7 +141,9 @@ const WrongNotePage = () => {
     const result = allData.filter((item) => {
       const levelMatch = levelFilter === "전체" || item.level === levelFilter;
       const subjectMatch =
-        subjectFilter.length === 0 || subjectFilter.includes(item.subject);
+        subjectFilter.length === 0 ||
+        subjectFilter.includes(getSubjectLabel(item.subject));
+
       const statusMatch =
         statusFilter === "전체" ||
         (statusFilter === "정답" && item.correct === true) ||
