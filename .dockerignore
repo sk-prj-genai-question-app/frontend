@@ -12,8 +12,5 @@ Dockerfile
 .idea/
 .vscode/
 
-# Nginx 설정
-nginx/
-
 # 환경 변수 파일 (보안)
 .env
