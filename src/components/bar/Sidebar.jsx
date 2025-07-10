@@ -36,6 +36,7 @@ const Sidebar = () => {
         <Link to="/support">
           <button>Support</button>
         </Link>
+          <button>Settings</button>
       </div>
     </div>
   );

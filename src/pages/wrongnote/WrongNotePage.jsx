@@ -4,18 +4,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import styles from "./WrongNotePage.module.css";
+import WrongNoteChatBox from "../../components/wrongnote/ChatBox";
+import WrongNoteChatModal from "../../components/wrongnote/ChatModal";
 
-const allSubjects = [
-  "언어지식(문자・어휘・문법)・독해",
-  "언어지식(문자・어휘)",
-  "언어지식(문법)・독해",
-];
+const allSubjects = ["어휘", "문법", "독해"];
 
 const subjectOptionsByLevel = {
   전체: allSubjects,
-  N1: ["언어지식(문자・어휘・문법)・독해"],
-  N2: ["언어지식(문자・어휘・문법)・독해"],
-  N3: ["언어지식(문자・어휘)", "언어지식(문법)・독해"],
+  N1: ["어휘", "문법", "독해"],
+  N2: ["어휘", "문법", "독해"],
+  N3: ["어휘", "문법", "독해"],
 };
 
 const WrongNotePage = () => {
@@ -25,6 +23,7 @@ const WrongNotePage = () => {
   const [subjectFilter, setSubjectFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState("전체");
   const [openExplanations, setOpenExplanations] = useState({});
+  const [selectedProblemId, setSelectedProblemId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -142,7 +141,9 @@ const WrongNotePage = () => {
     const result = allData.filter((item) => {
       const levelMatch = levelFilter === "전체" || item.level === levelFilter;
       const subjectMatch =
-        subjectFilter.length === 0 || subjectFilter.includes(item.subject);
+        subjectFilter.length === 0 ||
+        subjectFilter.includes(getSubjectLabel(item.subject));
+
       const statusMatch =
         statusFilter === "전체" ||
         (statusFilter === "정답" && item.correct === true) ||
@@ -233,7 +234,9 @@ const WrongNotePage = () => {
                 />
                 <div className={styles.questionTextWrapper}>
                   <div className={styles.questionText}>{item.question}</div>
-                  <div className={styles.subQuestionText}>{item.sub_question}</div>
+                  <div className={styles.subQuestionText}>
+                    {item.sub_question}
+                  </div>
                 </div>
               </div>
               {item.problm_content && (
@@ -256,13 +259,14 @@ const WrongNotePage = () => {
                 </div>
               )}
               {/* ✅ 충돌 해결 부분: 다시 풀기 기능 추가 및 CSS 모듈 적용 */}
-              <div className={styles.buttonGroup}> {/* dev/1.3.1의 CSS 모듈 적용 */}
+              <div className={styles.buttonGroup}>
+                {" "}
+                {/* dev/1.3.1의 CSS 모듈 적용 */}
                 <button
                   onClick={() => navigate(`/retry-problem/${item.questionId}`)} // feat/50-wrongnote-retake의 다시 풀기 기능 적용
                 >
                   다시 풀기
                 </button>
-
                 <button onClick={() => toggleExplanation(item.id)}>
                   {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
                 </button>
@@ -272,14 +276,24 @@ const WrongNotePage = () => {
                 >
                   삭제
                 </button>
+                <button onClick={() => setSelectedProblemId(item.questionId)}>
+                  질문하기
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
-
+      {selectedProblemId && (
+        <WrongNoteChatModal
+          problemId={selectedProblemId}
+          onClose={() => setSelectedProblemId(null)}
+        />
+      )}
       <div className={styles.fixedBottomButton}>
-        <button>전체 다시 풀기</button>
+        <button onClick={() => navigate("/retry-all", { state: { problems: filteredData } })}>
+          전체 다시 풀기
+        </button>
       </div>
     </div>
   );
