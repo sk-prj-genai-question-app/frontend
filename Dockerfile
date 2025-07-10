@@ -25,8 +25,8 @@ COPY . /app
 RUN npm run build
 
 # 두 번째 단계: Nginx 웹서버 단계
-# 최신 버전의 Nginx 공식 이미지를 베이스로 사용
-FROM nginx:latest
+# 특정 버전의 Nginx 알파인 이미지를 베이스로 사용하여 이미지 크기를 줄이고 일관성을 유지
+FROM nginx:1.27-alpine
 
 # Nginx의 기본 설정 파일을 제거
 # default.conf는 Nginx가 기본으로 제공하는 설정으로, 커스텀 설정을 사용하기 위해 삭제
