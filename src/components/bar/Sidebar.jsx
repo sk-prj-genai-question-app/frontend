@@ -36,9 +36,7 @@ const Sidebar = () => {
         <Link to="/support">
           <button>Support</button>
         </Link>
-        <Link to="/settings">
           <button>Settings</button>
-        </Link>
       </div>
     </div>
   );

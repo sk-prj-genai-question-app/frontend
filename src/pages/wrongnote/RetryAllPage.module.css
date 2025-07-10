@@ -1,0 +1,194 @@
+.retryProblemPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+.retryProblemPage h2 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.problemCount {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.problemContainer {
+  width: 100%;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.problemLevelType {
+  font-size: 1.1em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.problemTitleParent {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.problemTitleChild {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.problemContent {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.choicesContainer {
+  margin-bottom: 20px;
+}
+
+.choiceItem {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+}
+
+.choiceItem:hover {
+  background-color: #f0f0f0;
+  border-color: #bbb;
+}
+
+.selected {
+  background-color: #e0f7fa;
+  border-color: #00bcd4;
+}
+
+.correct {
+  background-color: #e8f5e9;
+  border-color: #4caf50;
+  font-weight: bold;
+}
+
+.incorrect {
+  background-color: #ffebee;
+  border-color: #f44336;
+  font-weight: bold;
+}
+
+.choiceNumber {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.submitButton {
+  padding: 12px 25px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.submitButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.explanationContainer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  width: 100%;
+}
+
+.explanationContainer h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.explanationContainer p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.nextProblemButton {
+  width: 100%;
+  padding: 12px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nextProblemButton:hover {
+  background-color: #218838;
+}
+
+.resultSummary {
+  text-align: center;
+}
+
+.scoreText {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.resultList {
+  text-align: left;
+  padding: 0;
+  margin-bottom: 25px;
+}
+
+.correctResult {
+  color: #28a745;
+  margin-bottom: 8px;
+}
+
+.incorrectResult {
+  color: #dc3545;
+  margin-bottom: 8px;
+}
+
+.backButton {
+  padding: 12px 25px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #5a6268;
+}
