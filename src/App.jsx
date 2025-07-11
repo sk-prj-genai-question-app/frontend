@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from 'react-router-dom';
 import Sidebar from './components/bar/Sidebar';
 import TopBar from './components/bar/TopBar';
 
@@ -21,7 +26,8 @@ import './index.css';
 
 const LayoutWrapper = ({ children }) => {
   const location = useLocation();
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register';
 
   if (isAuthPage) {
     return <>{children}</>;
@@ -41,8 +47,10 @@ const LayoutWrapper = ({ children }) => {
 function App() {
   return (
     <Router>
+      {/* LayoutWrapper를 사용하여 페이지 레이아웃을 관리 (이전 병합 결과 유지) */}
       <LayoutWrapper>
         <Routes>
+          {/* ProtectedRoute로 감싸진 라우트들 (이전 병합 결과 유지) */}
           <Route
             path="/"
             element={
@@ -101,13 +109,13 @@ function App() {
             }
           />
 
-          <Route
-            path="/retry-all"
+          <Route 
+            path="/retry-all" 
             element={
               <ProtectedRoute>
                 <RetryAllPage />
               </ProtectedRoute>
-            }
+            } 
           />
 
           <Route
@@ -128,6 +136,7 @@ function App() {
             }
           />
 
+          {/* 로그인, 회원가입 페이지는 보호 안 함 (이전 병합 결과 유지) */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
