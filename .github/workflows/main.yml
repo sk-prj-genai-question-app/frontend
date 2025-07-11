@@ -9,7 +9,7 @@ on:
 
 env:
   DOCKER_IMAGE: frontend
-  DOCKER_TAG: 0.3
+  DOCKER_TAG: 0.4
 
 jobs:
   Docker:
