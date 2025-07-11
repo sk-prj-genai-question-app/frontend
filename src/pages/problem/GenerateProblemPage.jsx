@@ -19,7 +19,7 @@ const GenerateProblemPage = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/problems/generate', {
+      const response = await axios.post('/ai/problems/generate', {
         level: level,
         problem_type: problemType,
       });
@@ -34,6 +34,9 @@ const GenerateProblemPage = () => {
       });
     } catch (error) {
       console.error('Error generating problem:', error);
+      console.error('Full error response:', error.response);
+      console.error('Status code:', error.response?.status);
+      console.error('Error data:', error.response?.data);
       alert('문제 생성에 실패했습니다.');
     } finally {
       setIsLoading(false);

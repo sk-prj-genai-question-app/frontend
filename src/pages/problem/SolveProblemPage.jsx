@@ -78,7 +78,7 @@ const SolveProblemPage = () => {
         if (currentProblemIndex < problemHistory.length) {
           nextProblem = problemHistory[currentProblemIndex];
         } else {
-          const response = await axios.post('http://127.0.0.1:8000/problems/generate', {
+          const response = await axios.post('/ai/problems/generate', {
             level: initialLevel,
             problem_type: initialProblemType,
           });
