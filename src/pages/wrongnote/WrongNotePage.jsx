@@ -37,7 +37,7 @@ const WrongNotePage = () => {
         }
 
         const res = await axios.get(
-          ""/api/answer-record/my-records?isCorrect=false"",
+          "/api/answer-record/my-records?isCorrect=false",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

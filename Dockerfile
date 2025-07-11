@@ -34,7 +34,9 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 # 호스트의 nginx/nginx.conf 파일을 컨테이너의 Nginx 설정 디렉토리로 복사
 # 이 파일에는 React SPA(Single Page Application)를 위한 커스텀 Nginx 설정이 포함됨
-COPY nginx/nginx.conf /etc/nginx/conf.d
+#COPY nginx/nginx.conf /etc/nginx/conf.d
+#COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # 첫 번째 빌드 단계에서 생성된 React 앱의 빌드 결과물을 Nginx의 정적 파일 서빙 디렉토리로 복사
 # --from=build 플래그로 이전 단계의 결과물을 참조

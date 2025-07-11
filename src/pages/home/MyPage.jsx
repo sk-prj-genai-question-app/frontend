@@ -5,6 +5,9 @@ import ExamInfoCard from '../../components/home/ExamInfoCard';
 import ProgressCard from '../../components/home/ProgressCard';
 import './MyPage.css';
 
+
+const API_BASE_URL = '/api'; // Nginx 프록시 설정에 따라 변경
+
 const MyPage = () => {
   const user = {
     name: 'User',
@@ -30,7 +33,7 @@ const MyPage = () => {
     const fetchAnalysis = async () => {
       const token = localStorage.getItem('accessToken');
       try {
-        const res = await axios.get('/api/answer-record/my-analysis', {
+        const res = await axios.get(`${API_BASE_URL}/answer-record/my-analysis`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
