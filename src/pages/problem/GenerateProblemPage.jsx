@@ -104,6 +104,7 @@ const GenerateProblemPage = () => {
       {/* ✅ 로딩 오버레이 */}
       {isLoading && (
         <div className="loading-overlay">
+          <div className="spinner"></div>
           <div className="loading-text">문제를 생성 중입니다...</div>
         </div>
       )}
