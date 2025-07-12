@@ -85,6 +85,7 @@
   background: rgba(0, 0, 0, 0.4);
   z-index: 9999;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -96,4 +97,24 @@
   background: rgba(0, 0, 0, 0.6);
   padding: 20px 40px;
   border-radius: 10px;
+}
+
+/* 스피너 스타일 */
+.spinner {
+  border: 8px solid rgba(255, 255, 255, 0.3);
+  border-top: 8px solid #007bff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
