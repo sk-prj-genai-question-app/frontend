@@ -1,12 +1,51 @@
-# React + Vite
+# 🌐 JLPT 문제 생성 학습 도우미 - 프론트엔드
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. 🚀 프로젝트 소개
 
-Currently, two official plugins are available:
+이 프로젝트는 "생성형 AI를 통한 JLPT 문제 생성 학습 도우미" 웹 애플리케이션의 프론트엔드 부분입니다. 사용자 인터페이스를 통해 JLPT 문제 풀이, AI 챗봇과의 상호작용, 학습 기록 관리 등 모든 사용자 경험을 제공합니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 2. 🛠️ 기술 스택
 
-## Expanding the ESLint configuration
+- **언어**: JavaScript / TypeScript
+- **프레임워크**: React
+- **빌드 도구**: Vite
+- **상태 관리**: (필요시 추가)
+- **스타일링**: Tailwind CSS, PostCSS, Autoprefixer
+- **라우팅**: React Router DOM
+- **HTTP 통신**: Axios
+- **차트**: Recharts
+- **기타**: React Icons, React Select, React Circular Progressbar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 3. ✨ 주요 기능
+
+- **사용자 인증**: 회원가입, 로그인, 로그아웃
+- **JLPT 문제 풀이**: AI가 생성한 문제 표시 및 사용자 답변 입력
+- **학습 기록 관리**: 문제 풀이 결과 및 진행 상황 시각화
+- **AI 챗봇 인터페이스**: AI 서비스와의 실시간 상호작용을 위한 UI
+- **반응형 디자인**: 다양한 디바이스에서 최적화된 사용자 경험 제공
+
+## 4. ⚙️ 환경 설정
+
+프로젝트를 로컬에서 실행하기 위해 별도의 환경 변수 설정은 필요하지 않습니다. 백엔드 및 AI 서비스의 API 엔드포인트는 애플리케이션 내부에서 설정됩니다.
+
+## 5. ▶️ 실행 방법
+
+1.  **의존성 설치**: 프로젝트 루트에서 다음 명령어를 실행하여 필요한 Node.js 패키지를 설치합니다.
+    ```bash
+    npm install
+    ```
+2.  **개발 서버 실행**: 개발 모드로 애플리케이션을 실행합니다.
+    ```bash
+    npm run dev
+    ```
+3.  **접속**: 애플리케이션은 기본적으로 `http://localhost:5173` (또는 Vite가 할당하는 다른 포트)에서 실행됩니다.
+
+4.  **프로덕션 빌드**: 배포를 위한 프로덕션 빌드를 생성합니다.
+    ```bash
+    npm run build
+    ```
+    빌드된 파일은 `dist` 디렉토리에 생성됩니다.
+
+## 6. 📄 라이선스
+
+이 프로젝트는 MIT License를 따릅니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
