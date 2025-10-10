@@ -24,7 +24,7 @@ const Sidebar = () => {
         <button>홈</button>
       </Link>
       <Link to="/wrong-note">
-        <button>오답노트</button>
+        <button>복습노트</button>
       </Link>
       <Link to="/generate-problem">
         <button>문제 풀기</button>

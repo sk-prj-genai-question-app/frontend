@@ -1,27 +1,27 @@
 // WrongNotePage.jsx
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import Select from "react-select";
-import styles from "./WrongNotePage.module.css";
-import WrongNoteChatBox from "../../components/wrongnote/ChatBox";
-import WrongNoteChatModal from "../../components/wrongnote/ChatModal";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Select from 'react-select';
+import styles from './WrongNotePage.module.css';
+import WrongNoteChatBox from '../../components/wrongnote/ChatBox';
+import WrongNoteChatModal from '../../components/wrongnote/ChatModal';
 
-const allSubjects = ["어휘", "문법", "독해"];
+const allSubjects = ['어휘', '문법', '독해'];
 
 const subjectOptionsByLevel = {
   전체: allSubjects,
-  N1: ["어휘", "문법", "독해"],
-  N2: ["어휘", "문법", "독해"],
-  N3: ["어휘", "문법", "독해"],
+  N1: ['어휘', '문법', '독해'],
+  N2: ['어휘', '문법', '독해'],
+  N3: ['어휘', '문법', '독해'],
 };
 
 const WrongNotePage = () => {
   const [allData, setAllData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [levelFilter, setLevelFilter] = useState("전체");
+  const [levelFilter, setLevelFilter] = useState('전체');
   const [subjectFilter, setSubjectFilter] = useState([]);
-  const [statusFilter, setStatusFilter] = useState("전체");
+  const [statusFilter, setStatusFilter] = useState('전체');
   const [openExplanations, setOpenExplanations] = useState({});
   const [selectedProblemId, setSelectedProblemId] = useState(null);
 
@@ -30,18 +30,15 @@ const WrongNotePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
+        const token = localStorage.getItem('accessToken');
         if (!token) {
-          console.warn("⛔ accessToken 없음");
+          console.warn('⛔ accessToken 없음');
           return;
         }
 
-        const res = await axios.get(
-          "/api/answer-record/my-records?isCorrect=false",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await axios.get('/api/answer-record/my-records?isCorrect=false', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         const rawData = res?.data?.data;
         if (!Array.isArray(rawData)) return;
@@ -71,12 +68,9 @@ const WrongNotePage = () => {
         const detailedData = await Promise.all(
           uniqueRecords.map(async (item) => {
             try {
-              const probRes = await axios.get(
-                `/api/problems/${item.questionId}`,
-                {
-                  headers: { Authorization: `Bearer ${token}` },
-                }
-              );
+              const probRes = await axios.get(`/api/problems/${item.questionId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+              });
               const problem = probRes.data.data;
               return {
                 id: item.recordId,
@@ -106,7 +100,7 @@ const WrongNotePage = () => {
         const filtered = detailedData.filter(Boolean);
         setAllData(filtered);
       } catch (err) {
-        console.error("❌ 오답노트 데이터 불러오기 실패:", err);
+        console.error('❌ 복습노트 데이터 불러오기 실패:', err);
       }
     };
 
@@ -114,40 +108,36 @@ const WrongNotePage = () => {
   }, []);
 
   const handleDelete = async (recordId) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem('accessToken');
     try {
-      await axios.delete(
-        `/api/answer-record/${recordId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`/api/answer-record/${recordId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setAllData((prev) => prev.filter((item) => item.id !== recordId));
       // TODO: window.alert 대신 커스텀 모달 사용
-      window.alert("🗑️ 삭제 성공!");
+      window.alert('🗑️ 삭제 성공!');
     } catch (err) {
-      console.error("❌ 삭제 실패:", err);
+      console.error('❌ 삭제 실패:', err);
       // TODO: window.alert 대신 커스텀 모달 사용
-      window.alert("삭제 중 문제가 발생했어요!");
+      window.alert('삭제 중 문제가 발생했어요!');
     }
   };
 
   const confirmAndDelete = (id) => {
     // TODO: window.confirm 대신 커스텀 모달 사용
-    if (window.confirm("정말 삭제하시겠습니까?")) handleDelete(id);
+    if (window.confirm('정말 삭제하시겠습니까?')) handleDelete(id);
   };
 
   useEffect(() => {
     const result = allData.filter((item) => {
-      const levelMatch = levelFilter === "전체" || item.level === levelFilter;
+      const levelMatch = levelFilter === '전체' || item.level === levelFilter;
       const subjectMatch =
-        subjectFilter.length === 0 ||
-        subjectFilter.includes(getSubjectLabel(item.subject));
+        subjectFilter.length === 0 || subjectFilter.includes(getSubjectLabel(item.subject));
 
       const statusMatch =
-        statusFilter === "전체" ||
-        (statusFilter === "정답" && item.correct === true) ||
-        (statusFilter === "오답" && item.correct === false);
+        statusFilter === '전체' ||
+        (statusFilter === '정답' && item.correct === true) ||
+        (statusFilter === '오답' && item.correct === false);
       return levelMatch && subjectMatch && statusMatch;
     });
 
@@ -170,12 +160,12 @@ const WrongNotePage = () => {
 
   const getSubjectLabel = (subjectCode) => {
     switch (subjectCode) {
-      case "V":
-        return "어휘";
-      case "G":
-        return "문법";
-      case "R":
-        return "독해";
+      case 'V':
+        return '어휘';
+      case 'G':
+        return '문법';
+      case 'R':
+        return '독해';
       default:
         return subjectCode;
     }
@@ -201,15 +191,10 @@ const WrongNotePage = () => {
           isMulti
           placeholder="과목"
           options={subjectOptions}
-          value={subjectOptions.filter((opt) =>
-            subjectFilter.includes(opt.value)
-          )}
+          value={subjectOptions.filter((opt) => subjectFilter.includes(opt.value))}
           onChange={handleSubjectChange}
         />
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-        >
+        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option disabled>상태</option>
           <option value="전체">전체</option>
           <option value="오답">오답</option>
@@ -228,15 +213,13 @@ const WrongNotePage = () => {
               </div>
               <div className={styles.questionHeader}>
                 <img
-                  src={item.correct ? "/correct.png" : "/wrong.png"}
+                  src={item.correct ? '/correct.png' : '/wrong.png'}
                   alt="status"
                   className={styles.statusIcon}
                 />
                 <div className={styles.questionTextWrapper}>
                   <div className={styles.questionText}>{item.question}</div>
-                  <div className={styles.subQuestionText}>
-                    {item.sub_question}
-                  </div>
+                  <div className={styles.subQuestionText}>{item.sub_question}</div>
                 </div>
               </div>
               {item.problm_content && (
@@ -253,14 +236,14 @@ const WrongNotePage = () => {
                   <div
                     className={styles.explanationContent}
                     dangerouslySetInnerHTML={{
-                      __html: item.explanation.replace(/\n/g, "<br />"),
+                      __html: item.explanation.replace(/\n/g, '<br />'),
                     }}
                   />
                 </div>
               )}
               {/* ✅ 충돌 해결 부분: 다시 풀기 기능 추가 및 CSS 모듈 적용 */}
               <div className={styles.buttonGroup}>
-                {" "}
+                {' '}
                 {/* dev/1.3.1의 CSS 모듈 적용 */}
                 <button
                   onClick={() => navigate(`/retry-problem/${item.questionId}`)} // feat/50-wrongnote-retake의 다시 풀기 기능 적용
@@ -268,7 +251,7 @@ const WrongNotePage = () => {
                   다시 풀기
                 </button>
                 <button onClick={() => toggleExplanation(item.id)}>
-                  {openExplanations[item.id] ? "해설 닫기" : "해설 보기"}
+                  {openExplanations[item.id] ? '해설 닫기' : '해설 보기'}
                 </button>
                 <button
                   className={styles.delete} // dev/1.3.1의 CSS 모듈 적용
@@ -276,9 +259,7 @@ const WrongNotePage = () => {
                 >
                   삭제
                 </button>
-                <button onClick={() => setSelectedProblemId(item.questionId)}>
-                  질문하기
-                </button>
+                <button onClick={() => setSelectedProblemId(item.questionId)}>질문하기</button>
               </div>
             </div>
           ))}
@@ -291,7 +272,7 @@ const WrongNotePage = () => {
         />
       )}
       <div className={styles.fixedBottomButton}>
-        <button onClick={() => navigate("/retry-all", { state: { problems: filteredData } })}>
+        <button onClick={() => navigate('/retry-all', { state: { problems: filteredData } })}>
           전체 다시 풀기
         </button>
       </div>

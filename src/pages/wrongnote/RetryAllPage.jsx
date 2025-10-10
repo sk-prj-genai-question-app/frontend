@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import styles from "./RetryAllPage.module.css";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import styles from './RetryAllPage.module.css';
 
 const RetryAllPage = () => {
   const location = useLocation();
@@ -54,12 +54,12 @@ const RetryAllPage = () => {
     if (isFinished) {
       const saveResultsToServer = async () => {
         setIsSaving(true);
-        const token = localStorage.getItem("accessToken");
+        const token = localStorage.getItem('accessToken');
         try {
           await Promise.all(
             problems.map((p) =>
               axios.post(
-                "/api/answer-record",
+                '/api/answer-record',
                 {
                   problem_id: p.questionId,
                   user_answer: results[p.questionId] ? p.answerNumber : -1,
@@ -70,10 +70,10 @@ const RetryAllPage = () => {
               )
             )
           );
-          alert("결과가 저장되었습니다.");
+          alert('결과가 저장되었습니다.');
         } catch (error) {
-          console.error("결과 저장 실패:", error);
-          alert("결과 저장에 실패했습니다. 다시 시도해주세요.");
+          console.error('결과 저장 실패:', error);
+          alert('결과 저장에 실패했습니다. 다시 시도해주세요.');
         } finally {
           setIsSaving(false);
         }
@@ -84,15 +84,15 @@ const RetryAllPage = () => {
   }, [isFinished, problems, results]);
 
   const goBackToWrongNote = () => {
-    navigate("/wrong-note");
+    navigate('/wrong-note');
   };
 
   const getChoiceClass = (choiceNumber) => {
-    if (!showAnswer) return selectedChoice === choiceNumber ? styles.selected : "";
+    if (!showAnswer) return selectedChoice === choiceNumber ? styles.selected : '';
     if (choiceNumber === currentProblem.answerNumber) return styles.correct;
     if (selectedChoice === choiceNumber && selectedChoice !== currentProblem.answerNumber)
       return styles.incorrect;
-    return "";
+    return '';
   };
 
   return (
@@ -106,11 +106,11 @@ const RetryAllPage = () => {
           <div className={styles.problemContainer}>
             <p className={styles.problemLevelType}>
               [{currentProblem.level}]
-              {currentProblem.subject === "V"
-                ? "어휘"
-                : currentProblem.subject === "G"
-                ? "문법"
-                : "독해"}
+              {currentProblem.subject === 'V'
+                ? '어휘'
+                : currentProblem.subject === 'G'
+                ? '문법'
+                : '독해'}
             </p>
             <h3 className={styles.problemTitleParent}>{currentProblem.question}</h3>
             {currentProblem.sub_question && (
@@ -130,8 +130,7 @@ const RetryAllPage = () => {
                     className={`${styles.choiceItem} ${getChoiceClass(choice.number)}`}
                     onClick={() => !showAnswer && handleChoiceClick(choice.number)}
                   >
-                    <span className={styles.choiceNumber}>{choice.number}.</span>{" "}
-                    {choice.content}
+                    <span className={styles.choiceNumber}>{choice.number}.</span> {choice.content}
                   </div>
                 ))}
             </div>
@@ -151,7 +150,7 @@ const RetryAllPage = () => {
                 <h4>해설</h4>
                 <p>{currentProblem.explanation}</p>
                 <button className={styles.nextProblemButton} onClick={handleNextProblem}>
-                  {currentIndex < problems.length ? "다음 문제" : "결과 보기"}
+                  {currentIndex < problems.length ? '다음 문제' : '결과 보기'}
                 </button>
               </div>
             )}
@@ -180,7 +179,7 @@ const RetryAllPage = () => {
                 ))}
               </ul> */}
               <button className={styles.backButton} onClick={goBackToWrongNote}>
-                오답노트로 돌아가기
+                복습노트로 돌아가기
               </button>
             </>
           )}
